@@ -9,7 +9,7 @@ csv等から利得行列を読み込める仕組み必須
 原型は以前演習で作ったものを利用。
 """
 
-with open('/Users/ywatanabe/otreeapps/oTree/prempexp/test.yaml') as f: # 果たしてこんなところでyamlを読み込んで大丈夫なんでしょうか大丈夫でした
+with open('prempexp/test.yaml') as f: # 果たしてこんなところでyamlを読み込んで大丈夫なんでしょうか大丈夫でした
     payoff_matrix = yaml.safe_load(f)
 
 class C(BaseConstants):
