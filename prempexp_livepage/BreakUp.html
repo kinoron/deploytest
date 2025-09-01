@@ -1,0 +1,286 @@
+{{ block title }}
+今の相手と取引を続けますか？
+{{ endblock }}
+
+
+{{ block content }}
+
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+    }
+    #main_question {
+        display: none;
+    }
+    #continue_message {
+        font-size: larger;
+        margin-top: 50px;
+    }
+    #waiting_opponent {
+        display: none;
+        margin-top: 50px;
+    }
+    #waiting_message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: larger;
+    }
+    #loading_icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+    #main_result {
+        display: none;
+        margin-top: 50px;
+    }
+    #button_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 5em;
+        margin-top: 100px;
+    }
+    .yesnobutton {
+    /* justify-content: center;
+    align-items: center;
+    flex-direction: row; */
+    width: 250px;
+    /* margin: 0 auto; */
+    padding: .9em 2em;
+    border: 1px solid #2589d0;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #2589d0;
+    font-size: 1em;
+    }
+    .yesnobutton:hover {
+        border: none;
+        background-color: #2589d0;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    #result_continue {
+        display: flex;
+        align-items: center;
+        grid-gap: 0 .7em;
+        margin: 0 auto;
+        padding: 1em;
+        border-radius: 5px;
+        background-color: #ecffe9;
+        color: #333333;
+        font-size: larger;
+    }
+
+    #result_continue::before {
+        width: 24px;
+        height: 12px;
+        border-bottom: 6px solid #86d67c;
+        border-left: 6px solid #86d67c;
+        transform: rotate(-45deg) translate(2.5px, -2.5px);
+        content: '';
+    }
+
+    #result_continue p {
+        margin: 0;
+        padding: 0 0 0 .7em;
+        border-left: 1px solid #86d67c;
+    }
+
+    #result_divorce {
+        display: flex;
+        align-items: center;
+        grid-gap: 0 .7em;
+        margin: 0 auto;
+        padding: 1em;
+        border-radius: 5px;
+        background-color: #ffebee;
+        color: #333333;
+        font-size: larger;
+    }
+
+    #result_divorce::before {
+        width: 24px;
+        height: 12px;
+        border-bottom: 6px solid #f06060;
+        border-left: 6px solid #f06060;
+        transform: rotate(-45deg) translate(2.5px, -2.5px);
+        content: '';
+        }
+
+    #result_divorce p {
+        margin: 0;
+        padding: 0 0 0 .7em;
+        border-left: 1px solid #f06060;
+    }
+
+    #next {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 100px;
+    }
+
+    .otree-btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin:0 auto;
+    padding: .9em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+    font-size: larger;
+    content: '次の取引に進む';
+}
+
+    .otree-btn-next::after {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        content: '';
+    }
+
+    .otree-btn-next:hover {
+        background-color: #1579c0;
+    }
+
+</style>
+
+<body>
+    <div id="main_question">
+        <p id="continue_message">
+            次のラウンドも今の相手と取引を続けたい場合は「はい」を、続けたくない場合は「いいえ」を選んでください。
+        </p>
+            <div id="button_container">
+                <button 
+                type="button" 
+                onclick="
+                send_decision(true); 
+                switch_display(); "
+                id="yes_button"
+                class="yesnobutton"
+                >
+                    はい
+                </button>
+                <button 
+                type="button"
+                onclick="
+                send_decision(false);
+                switch_display(); "
+                id="no_button"
+                class="yesnobutton"
+                >
+                    いいえ
+                </button>
+
+            </div>
+    </div>
+    <div id="waiting_opponent">
+        <p id="waiting_message">相手の選択を待っています</p>
+        <div id="loading_icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#2589d0">
+                <circle cx="12" cy="2" r="2" opacity=".1">
+                    <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin="0"/>
+                </circle>
+                <circle transform="rotate(45 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                    <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".125s"/>
+                </circle>
+                <circle transform="rotate(90 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                    <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".25s"/>
+                </circle>
+                <circle transform="rotate(135 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                    <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".375s"/>
+                </circle>
+                <circle transform="rotate(180 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                    <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".5s"/>
+                </circle>
+                <circle transform="rotate(225 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                    <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".625s"/>
+                </circle>
+                <circle transform="rotate(270 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                    <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".75s"/>
+                </circle>
+                <circle transform="rotate(315 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                    <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".875s"/>
+                </circle>
+            </svg>
+        </div>
+
+    </div>
+    <div id="main_result">
+        <p id="result_continue">
+            次のラウンドも今と同じ相手と取引を続けます。
+        </p>
+        <p id="result_divorce">
+            今のペアは解散します。次のラウンドでは違う相手との取引が始まります。
+        </p>
+        <div id="next">
+            {{ next_button }}
+        </div>
+    </div>
+</body>
+
+<script>
+
+    function send_decision(decision) {
+        if (decision == true) {
+            liveSend({'decision_continue': 1})
+        }
+        if (decision == false) {
+            liveSend({'decision_continue': 0})
+        }
+    }
+
+    function switch_display() {
+        document.getElementById('main_question').style.display = "none";
+        document.getElementById('waiting_opponent').style.display = "block";
+    }
+
+    function liveRecv(data) {
+        console.log(data)
+        let {status_continue, end_game} = data; 
+        console.log("なんかきた", end_game)
+        if (status_continue == 1) {
+            console.log("まだ選んでないよ", status_continue)
+            document.getElementById('main_question').style.display = "block";
+            document.getElementById('waiting_opponent').style.display = "none";
+            document.getElementById('main_result').style.display = "none";
+        } else if (status_continue == 2) {
+            console.log("相手を待ってるよ", status_continue)
+            document.getElementById('main_question').style.display = "none";
+            document.getElementById('waiting_opponent').style.display = "block";
+            document.getElementById('main_result').style.display = "none";
+        } else if (status_continue == 3) {
+            if (end_game == 0) {
+                console.log("絶対次の画面に行かせるよ", status_continue)
+                document.getElementById('main_question').style.display = "none";
+                document.getElementById('waiting_opponent').style.display = "none"
+                document.getElementById('main_result').style.display = "block"
+                document.getElementById('result_divorce').style.display = "none";
+            } else if (end_game == 1) {
+                console.log("絶対次の画面に行かせるよ", status_continue)
+                document.getElementById('main_question').style.display = "none";
+                document.getElementById('waiting_opponent').style.display = "none"
+                document.getElementById('main_result').style.display = "block"
+                document.getElementById('result_continue').style.display = "none";
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+</script>
+
+
+{{ endblock }}

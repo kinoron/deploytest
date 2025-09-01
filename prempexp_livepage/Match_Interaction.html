@@ -1,0 +1,392 @@
+{{ block title }}
+相手との取引
+{{ endblock }}
+
+{{ block content }}
+
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+    }
+    #new_comer {
+        display: none;
+    }
+    #old_friend {
+        display: none;
+    }
+    #main_question {
+        display: none;
+        margin-top: 20px;
+    }
+    #waiting_opponent {
+        display: none;
+        margin-top: 50px;
+    }
+    #waiting_message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: larger;
+    }
+    #loading_icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+    #main_result {
+        display: none;
+        margin-top: 20px;
+    }
+
+    #new_comer_msg {
+        display: flex;
+        align-items: center;
+        grid-gap: 0 .7em;
+        margin: 0 auto;
+        padding: 1em;
+        border-radius: 5px;
+        background-color: #ffebee;
+        color: #333333;
+        font-size: larger;
+    }
+
+    #new_comer_msg::before {
+        width: 24px;
+        height: 12px;
+        border-bottom: 6px solid #f06060;
+        border-left: 6px solid #f06060;
+        transform: rotate(-45deg) translate(2.5px, -2.5px);
+        content: '';
+    }
+
+    #new_comer_msg p {
+        margin: 0;
+        padding: 0 0 0 .7em;
+        border-left: 1px solid #f06060;
+    }
+
+    #old_friend_msg {
+        display: flex;
+        align-items: center;
+        grid-gap: 0 .7em;
+        margin: 0 auto;
+        padding: 1em;
+        border-radius: 5px;
+        background-color: #ecffe9;
+        color: #333333;
+        font-size: larger;
+    }
+
+    #old_friend_msg::before {
+        width: 24px;
+        height: 12px;
+        border-bottom: 6px solid #86d67c;
+        border-left: 6px solid #86d67c;
+        transform: rotate(-45deg) translate(2.5px, -2.5px);
+        content: '';
+    }
+
+    #old_friend_msg p {
+        margin: 0;
+        padding: 0 0 0 .7em;
+        border-left: 1px solid #86d67c;
+    }
+
+    .cell {
+        vertical-align: middle;
+        font-size: x-large;
+        width: 300px;
+    }
+    .payoff_txt {
+        font-size: xx-large;
+        font-weight: 600;
+    }
+
+    #button_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 270px;
+    height: 65px;
+    margin: 0 auto;
+    padding: .9em 2em;
+    border: 1px solid #2589d0;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #2589d0;
+    font-size: 2em;
+    }
+
+    .buttons:hover {
+        border: none;
+        background-color: #2589d0;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    #next {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 50px;
+    }
+
+    .otree-btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin:0 auto;
+    padding: .9em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+    font-size: larger;
+    content: '次の取引に進む';
+}
+
+    .otree-btn-next::after {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        content: '';
+    }
+
+    .otree-btn-next:hover {
+        background-color: #1579c0;
+    }
+
+
+
+
+</style>
+
+<body>
+    <div id="header">
+        <div id="new_comer">
+            <p id="new_comer_msg">新しい相手と取引を始めます。</p>
+        </div>
+        <div id="old_friend">
+            <p id="old_friend_msg">前の相手との取引を続けます。</p>
+        </div>
+    </div>
+
+    <div id="main_question">
+        <p id="main_first_msg">取引におけるあなたと相手の行動によって、以下の利益が得られます。</p>
+        <div id="payoff_matrix">
+            
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th scope="col" rowspan="2" colspan="2" class="align-middle"></th>
+                        <th scope="col" colspan="2" style="font-size: larger;">あなたの行動</th>
+                    </tr>
+                    <tr>
+                        <th scope="col" style="font-size: xx-large;">C</th>
+                        <th scope="col" style="font-size: xx-large;">D</th>
+                    </tr>
+
+                </thead>
+                <tbody style="height: 250px;">
+                    <tr>
+                        <th scope="row" rowspan="2" class="align_middle" 
+                            style="font-size: larger;
+                                vertical-align: middle;
+                                width: 200px;">
+                            相手の行動
+                        </th>
+                            <th scope="row" 
+                            style="font-size: xx-large;
+                                vertical-align: middle;">
+                            C
+                        </th>
+                            <td class="cell choiceC">あなた: <span class="payoff_txt">{{payoff_CC.0}}</span> pt<br>
+                                 相手: <span class="payoff_txt">{{payoff_CC.1}}</span> point
+                                </td>
+                            <td class="cell choiceD">あなた: <span class="payoff_txt">{{payoff_DC.0}}</span> pt<br>
+                                 相手: <span class="payoff_txt">{{payoff_DC.1}}</span> point
+                                </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" 
+                            style="font-size: xx-large;
+                                vertical-align: middle;">
+                            D
+                        </th>
+                        <td class="cell choiceC">あなた: <span class="payoff_txt">{{payoff_CD.0}}</span> pt<br>
+                             相手: <span class="payoff_txt">{{payoff_CD.1}}</span> point
+                            </td>
+                        <td class="cell choiceD">あなた: <span class="payoff_txt">{{payoff_DD.0}}</span> pt<br> 
+                            相手: <span class="payoff_txt">{{payoff_DD.1}}</span> point
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        
+        </div>
+
+        <div id="coop_defect">
+            <p>
+            あなたの行動を選んでください。
+            </p>
+            <div id="button_container">
+                <button 
+                type="button" 
+                onclick="
+                send_decision(true); 
+                switch_display(); "
+                class="buttons"
+                id="coop_button">
+                    C
+                </button>
+                <button 
+                type="button"
+                onclick="
+                send_decision(false);
+                switch_display(); "
+                class="buttons"
+                id="defect_button">
+                    D
+        </button>
+            </div>
+            
+
+        </div>
+    </div>
+   
+    <div id="waiting_opponent">
+        <p id="waiting_message">相手の選択を待っています</p>
+        <div id="loading_icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#2589d0">
+                    <circle cx="12" cy="2" r="2" opacity=".1">
+                        <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin="0"/>
+                    </circle>
+                    <circle transform="rotate(45 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                        <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".125s"/>
+                    </circle>
+                    <circle transform="rotate(90 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                        <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".25s"/>
+                    </circle>
+                    <circle transform="rotate(135 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                        <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".375s"/>
+                    </circle>
+                    <circle transform="rotate(180 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                        <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".5s"/>
+                    </circle>
+                    <circle transform="rotate(225 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                        <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".625s"/>
+                    </circle>
+                    <circle transform="rotate(270 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                        <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".75s"/>
+                    </circle>
+                    <circle transform="rotate(315 12 12)" cx="12" cy="2" r="2" opacity=".1">
+                        <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin=".875s"/>
+                    </circle>
+                </svg>
+            </div>
+    </div>
+    <div id="main_result">
+        <h3>取引結果：</h3>
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush" >
+                    <li class="list-group-item" >
+                        <p style="font-size: larger; margin-bottom: 0;">
+                            あなたの行動: 
+                            <span id="player_decision"></span>
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <p style="font-size: larger; margin-bottom: 0;">
+                            相手の行動: <span id="opponent_decision"></span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        
+<!-- 
+        <p style="font-size: large;">
+            あなたの行動: <span id="player_decision" style="font-size: larger;"></span>
+        </p>
+        <p style="f">
+            相手の行動: <span id="opponent_decision" style="font-size: larger;"></span>
+        </p> -->
+        <p style="margin-top: 20px;">
+            あなたが今回の取引で得たのは <span id="payoff" style="font-size: xx-large; font-weight: 600;"></span> ptでした。
+        </p>
+
+        <div id="next">
+            {{ next_button }}
+        </div>
+
+    </div>
+
+    
+</body>
+
+<script>
+    {{ if player.is_rematched == 1 }} 
+        document.getElementById('new_comer').style.display = "block";
+    {{ else }}
+        document.getElementById('old_friend').style.display = "block";
+    {{ endif }}
+
+    function send_decision(decision) {
+        if (decision == true) {
+            liveSend({'decision_pd': 1})
+        }
+        if (decision == false) {
+            liveSend({'decision_pd': 0})
+        }
+    }
+
+    function switch_display() {
+        document.getElementById('main_question').style.display = "none";
+        document.getElementById('header').style.display = "none";
+        document.getElementById('waiting_opponent').style.display = "block";
+    }
+
+    function liveRecv(data) {
+        console.log(data)
+        let {status_pd, payoff, player_decision, opponent_decision} = data;
+        console.log("なんかきた", data)
+        if (status_pd == 1) {
+            document.getElementById('header').style.display = "block";
+            document.getElementById('main_question').style.display = "block";
+            document.getElementById('waiting_opponent').style.display = "none";
+            document.getElementById('main_result').style.display = "none";
+        } else if (status_pd == 2) {
+            document.getElementById('header').style.display = "none";
+            document.getElementById('main_question').style.display = "none";
+            document.getElementById('waiting_opponent').style.display = "block";
+            document.getElementById('main_result').style.display = "none";
+        } else if (status_pd == 3) {
+            document.getElementById('payoff').innerText = payoff;
+            document.getElementById('player_decision').innerText = player_decision? "C" : "D";
+            document.getElementById('opponent_decision').innerText = opponent_decision? "C" : "D";
+            document.getElementById('header').style.display = "none";
+            document.getElementById('main_question').style.display = "none";
+            document.getElementById('waiting_opponent').style.display = "none";
+            document.getElementById('main_result').style.display = "block";
+        } 
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+</script>
+
+{{ endblock }}
