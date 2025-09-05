@@ -15,7 +15,7 @@ with open('prempexp_livepage/test.yaml') as f: # 果たしてこんなところ�
 class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 2
+    NUM_ROUNDS = 20
     PAYOFF_MATRIX = payoff_matrix 
     CONTINUATION_PROB = [0, 0, 0, 0.1, 0.15, 0.25, 0.25, 0.15, 0.1, 0, 0, 0]
 
