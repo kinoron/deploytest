@@ -8,6 +8,9 @@
     body {
         font-family: "Meiryo", sans-serif;
     }
+    #header {
+        display: none;
+    }
     #new_comer {
         display: none;
     }
@@ -121,7 +124,7 @@
     border-radius: 5px;
     background-color: #fff;
     color: #2589d0;
-    font-size: 2em;
+    font-size: xx-large;
     }
 
     .buttons:hover {
@@ -172,6 +175,8 @@
 
 </style>
 
+
+
 <body>
     <div id="header">
         <div id="new_comer">
@@ -211,10 +216,10 @@
                                 vertical-align: middle;">
                             C
                         </th>
-                            <td class="cell choiceC">あなた: <span class="payoff_txt">{{payoff_CC.0}}</span> pt<br>
+                            <td class="cell choiceC">あなた: <span class="payoff_txt">{{payoff_CC.0}}</span> point<br>
                                  相手: <span class="payoff_txt">{{payoff_CC.1}}</span> point
                                 </td>
-                            <td class="cell choiceD">あなた: <span class="payoff_txt">{{payoff_DC.0}}</span> pt<br>
+                            <td class="cell choiceD">あなた: <span class="payoff_txt">{{payoff_DC.0}}</span> point<br>
                                  相手: <span class="payoff_txt">{{payoff_DC.1}}</span> point
                                 </td>
                     </tr>
@@ -224,10 +229,10 @@
                                 vertical-align: middle;">
                             D
                         </th>
-                        <td class="cell choiceC">あなた: <span class="payoff_txt">{{payoff_CD.0}}</span> pt<br>
+                        <td class="cell choiceC">あなた: <span class="payoff_txt">{{payoff_CD.0}}</span> point<br>
                              相手: <span class="payoff_txt">{{payoff_CD.1}}</span> point
                             </td>
-                        <td class="cell choiceD">あなた: <span class="payoff_txt">{{payoff_DD.0}}</span> pt<br> 
+                        <td class="cell choiceD">あなた: <span class="payoff_txt">{{payoff_DD.0}}</span> point<br> 
                             相手: <span class="payoff_txt">{{payoff_DD.1}}</span> point
                         </td>
                     </tr>
@@ -324,7 +329,7 @@
             相手の行動: <span id="opponent_decision" style="font-size: larger;"></span>
         </p> -->
         <p style="margin-top: 20px;">
-            あなたが今回の取引で得たのは <span id="payoff" style="font-size: xx-large; font-weight: 600;"></span> ptでした。
+            あなたが今回の取引で得たのは <span id="payoff" style="font-size: xx-large; font-weight: 600;"></span> pointでした。
         </p>
 
         <div id="next">

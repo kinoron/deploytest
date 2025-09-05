@@ -1,13 +1,13 @@
 # 相互協力の利益固定
 round1:
-  (True, True): [100, 100] 
-  (True, False): [-500, 600]
-  (False, True): [600, -500]
+  (True, True): [600, 600] 
+  (True, False): [300, 300]
+  (False, True): [300, 300]
   (False, False): [0, 0]
 round2:
-  (True, True): [100, 100] 
-  (True, False): [-450, 550]
-  (False, True): [550, -450]
+  (True, True): [800, 800] 
+  (True, False): [400, 400]
+  (False, True): [400, 400]
   (False, False): [0, 0]
 round3:
   (True, True): [100, 100] 

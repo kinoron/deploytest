@@ -8,11 +8,19 @@
         font-size: xx-large;
         font-weight: 600;
     }
+    #participation_code {
+        font-size: xx-large;
+        font-weight: 600;
+    }
 </style>
 <body>
     <p>すべての取引が終了しました。全取引を通じてあなたが得たのは、 
         <span id="result"> {{cumulative_payoff}} </span> 
         でした。
+    </p>
+    <p>
+        あなたの参加者コード：<span id="participation_code">XXXXX</span> <br>
+        公式LINEのフォームから参加者コードを入力してください。
     </p>
 </body>
 {{ endblock }}
