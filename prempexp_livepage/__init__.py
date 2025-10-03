@@ -15,9 +15,9 @@ with open('prempexp_livepage/test.yaml') as f: # 果たしてこんなところ�
 class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 20
+    NUM_ROUNDS = 100
     PAYOFF_MATRIX = payoff_matrix 
-    CONTINUATION_PROB = [0, 0, 0, 0.1, 0.15, 0.25, 0.25, 0.15, 0.1, 0, 0, 0]
+    CONTINUATION_PROB = [0, 0, 0, 0.1, 0.2, 0.4, 0.2, 0.1, 0, 0, 0, 0]
 
 
 class Subsession(BaseSubsession):
@@ -70,7 +70,7 @@ def set_payoffs(group):
     key1 = "round{}"
     key2 = "({}, {})"
 
-    payoffs = C.PAYOFF_MATRIX[key1.format(continue_round)][key2.format(bool(p1.decision_pd), bool(p2.decision_pd))] # 継続ラウンドに応じて取り出す必要がある 入れ子の辞書が有力そう
+    payoffs = C.PAYOFF_MATRIX[key1.format(continue_round)][key2.format(bool(p1.field_maybe_none('decision_pd')), bool(p2.field_maybe_none('decision_pd')))] # 継続ラウンドに応じて取り出す必要がある 入れ子の辞書が有力そう
     p1.payoff = payoffs[0]
     p2.payoff = payoffs[1]
 
@@ -94,9 +94,11 @@ class Player(BasePlayer):
     decision_pd = models.BooleanField()
     opponent_decision_pd = models.BooleanField()
     status_pd = models.IntegerField(initial=1)
+    timeout_pd = models.BooleanField(initial=False)
 
     decision_continue = models.BooleanField()
     status_continue = models.IntegerField(initial = 1)
+    timeout_continue = models.BooleanField(initial=False)
 
     is_rematched = models.BooleanField(initial=True)
     player_max_round = models.IntegerField(initial=1)
@@ -202,12 +204,13 @@ class Introduction(Page):
 class MatchingWaitPage(WaitPage):
     wait_for_all_groups = True
     @staticmethod
-    def after_all_players_arrive(subsession: Subsession): # wait_for_all_groups = Trueなので、サブセッションの関数としてオーバーライド
+    def after_all_players_arrive(subsession: Subsession): # wait_for_all_groups = Trueなので、サブセッションの関数とする
         matchingsort(subsession)
 
 
 
 class Match_Interaction(Page):
+    timeout_seconds = 60
     @staticmethod
     def vars_for_template(player: Player):
         group = player.group
@@ -223,10 +226,20 @@ class Match_Interaction(Page):
     
     live_method = live_method
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if timeout_happened:
+            player.decision_pd = random.choice([0, 1])
+            player.timeout_pd = True
+            group = player.group
+            set_payoffs(group)
+
+
     
     
 
 class BreakUp(Page):
+    timeout_seconds = 60
     @staticmethod
     def live_method(player: Player, data):
         group = player.group
@@ -251,6 +264,14 @@ class BreakUp(Page):
                 )
                 for p in players
                 }
+    
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if timeout_happened:
+            group = player.group
+            player.decision_continue = False
+            group.end_game = True
+            player.timeout_continue = True
 
 
 

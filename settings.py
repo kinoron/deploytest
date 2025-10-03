@@ -14,7 +14,8 @@ SESSION_CONFIGS = [
     dict(
         name = 'prempexp_livepage',
         app_sequence=['prempexp_livepage'],
-        num_demo_participants=4,
+        num_demo_participants=20,
+        # use_browser_bots = True,
     ),
 ]
 

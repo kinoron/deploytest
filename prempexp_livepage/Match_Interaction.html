@@ -170,6 +170,10 @@
         background-color: #1579c0;
     }
 
+    .otree-timer {
+        display: none;
+    }
+
 
 
 
@@ -364,9 +368,9 @@
     }
 
     function liveRecv(data) {
-        console.log(data)
+        // console.log(data)
         let {status_pd, payoff, player_decision, opponent_decision} = data;
-        console.log("なんかきた", data)
+        // console.log("なんかきた", data)
         if (status_pd == 1) {
             document.getElementById('header').style.display = "block";
             document.getElementById('main_question').style.display = "block";
