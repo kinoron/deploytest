@@ -6,6 +6,7 @@ MarkupSafe==1.1.1
 numpy==2.3.1
 otree==5.11.4
 psycopg==3.2.9
+psycopg2-binary==2.9.10
 python-multipart==0.0.5
 PyYAML==6.0.2
 scipy==1.16.0
