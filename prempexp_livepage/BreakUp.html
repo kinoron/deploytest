@@ -249,6 +249,10 @@
         document.getElementById('waiting_opponent').style.display = "block";
     }
 
+    setTimeout(function() {
+            window.location.reload();
+        }, 5000); // refresh every 5 seconds
+
     function liveRecv(data) {
         console.log(data)
         let {status_continue, end_game} = data; 
