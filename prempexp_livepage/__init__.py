@@ -237,7 +237,7 @@ class Match_Interaction(Page):
     def before_next_page(player: Player, timeout_happened):
         if timeout_happened:
             if player.status_pd < 2:
-                player.decision_pd = random.choice([0, 1])
+                player.decision_pd = random.choice([True, False])
                 player.timeout_pd = True
                 group = player.group
                 set_payoffs(group)
@@ -278,7 +278,7 @@ class BreakUp(Page):
         if timeout_happened:
             if player.status_continue < 2:
                 group = player.group
-                player.decision_continue = random.choice([0, 1])
+                player.decision_continue = random.choice([True, False])
                 set_continuation(group)
                 player.timeout_continue = True
 
