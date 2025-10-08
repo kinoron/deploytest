@@ -85,8 +85,8 @@ def set_continuation(group):
     if p1_decision_continue == False or p2_decision_continue == False:
         group.end_game = True
 
-    if group.end_game == False:
-        group.end_game = random.random() > C.CONTINUATION_PROB
+    if group.end_game == False and random.random() > C.CONTINUATION_PROB:
+        group.end_game = False
     # if group.max_round == group.continue_round:
     #     group.end_game = True
 
