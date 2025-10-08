@@ -1,0 +1,15 @@
+{{ extends 'otree/WaitPage.html' }}
+{{ block title }}{{ title_text }}{{ endblock }}
+{{ block content }}
+    {{ body_text }}
+    <p>
+        しばらく他のプレイヤーをお待ちください
+    </p>
+
+    <script>
+        setTimeout(function() {
+            window.location.reload();
+        }, 3000); // refresh every 3 seconds
+    </script>
+
+{{ endblock }}

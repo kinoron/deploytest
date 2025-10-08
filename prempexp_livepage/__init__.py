@@ -209,6 +209,7 @@ class Introduction(Page):
 
 
 class MatchingWaitPage(WaitPage):
+    template_name = 'prempexp_livepage/MyWaitPage.html'
     wait_for_all_groups = True
     @staticmethod
     def after_all_players_arrive(subsession: Subsession): # wait_for_all_groups = Trueなので、サブセッションの関数とする
