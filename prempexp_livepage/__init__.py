@@ -15,7 +15,7 @@ with open('prempexp_livepage/test.yaml') as f: # 果たしてこんなところ�
 class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 5
+    NUM_ROUNDS = 80
     PAYOFF_MATRIX = payoff_matrix["round1"]   # ここで一律payoffmatrixを読み込む
     # PAYOFF_MATRIX = payoff_matrix
     ENDOWMENT = 50000
@@ -86,7 +86,7 @@ def set_continuation(group):
         group.end_game = True
 
     if group.end_game == False and random.random() > C.CONTINUATION_PROB:
-        group.end_game = False
+        group.end_game = True
     # if group.max_round == group.continue_round:
     #     group.end_game = True
 
