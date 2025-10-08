@@ -1,0 +1,236 @@
+{{ block title }}
+    理解度チェック
+{{ endblock }}
+
+{{ block content }}
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+        font-size: larger;
+    }
+
+    #alert {
+        display: none;
+    }
+
+    #alert_msg {
+        display: flex;
+        align-items: center;
+        grid-gap: 0 .7em;
+        margin: 0 auto;
+        padding: 1em;
+        border-radius: 5px;
+        background-color: #ffebee;
+        color: #f06060;
+        font-size: medium;
+    }
+
+    .box {
+    position: relative;
+    max-width: 1000px;
+    margin: 3em auto;
+    padding: 1em 1.5em;
+    border: 2px solid #2589d0;
+    border-radius: 3px;
+    }
+
+    .qtitle {
+        position: absolute;
+        top: -1.9em;
+        left: -2px;
+        padding: .2em .8em;
+        border-radius: 5px 5px 0 0;
+        background-color: #2589d0;
+        color: #fff;
+    }
+    .qtext {
+        font-weight: 400;
+    }
+
+    .box p {
+        margin: 0;
+        color: #333;
+    }
+
+    .choicebody {
+        font-weight: 400;
+    }
+
+    #discription {
+        margin-bottom: 1em;
+    }
+
+    #next {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 100px;
+    }
+
+    .otree-form-errors {
+        display: none;
+    }
+
+    .cell {
+        vertical-align: middle;
+        font-size: x-large;
+        width: 300px;
+    }
+    .payoff_txt {
+        font-size: xx-large;
+        font-weight: 600;
+    }
+
+    #slidewrapper {
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+    }
+
+    .otree-btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin:0 auto;
+    padding: .9em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+    font-size: larger;
+    content: '次の取引に進む';
+}
+
+    .otree-btn-next::after {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        content: '';
+    }
+
+    .otree-btn-next:hover {
+        background-color: #1579c0;
+    }
+</style>
+
+<body>
+    <div id="discription">
+        <p>
+            これから行う実験について、正しく理解しているか確認するため、簡単なクイズにお答えください。<br>
+            クイズは全部で3問です。全問正解すると先に進むことができます。<br>
+            ページ下部に、先ほど説明に使用した資料があるので、参考にしてください。
+        </p>
+    </div>
+    <div id="alert">
+        <p id="alert_msg">
+            間違っている問題があります。正しい答えを入力してください。
+        </p>
+    </div>
+    <div class="questionbody">
+        <div id="question1" class="box">
+            <span class="qtitle">問題1</span>
+            <p id="main_first_msg">
+                取引におけるあなたと相手の行動によって、以下の利益が得られるとします。
+                <br>　
+            </p>
+            <div id="payoff_matrix">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col" rowspan="2" colspan="2" class="align-middle"></th>
+                            <th scope="col" colspan="2" style="font-size: larger;">あなたの行動</th>
+                        </tr>
+                        <tr>
+                            <th scope="col" style="font-size: xx-large;">C</th>
+                            <th scope="col" style="font-size: xx-large;">D</th>
+                        </tr>
+
+                    </thead>
+                    <tbody style="height: 250px;">
+                        <tr>
+                            <th scope="row" rowspan="2" class="align_middle" 
+                                style="font-size: larger;
+                                    vertical-align: middle;
+                                    width: 200px;">
+                                相手の行動
+                            </th>
+                                <th scope="row" 
+                                style="font-size: xx-large;
+                                    vertical-align: middle;">
+                                C
+                            </th>
+                                <td class="cell choiceC">あなた: <span class="payoff_txt">400</span> point<br>
+                                    相手: <span class="payoff_txt">400</span> point
+                                    </td>
+                                <td class="cell choiceD">あなた: <span class="payoff_txt">600</span> point<br>
+                                    相手: <span class="payoff_txt">-200</span> point
+                                    </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" 
+                                style="font-size: xx-large;
+                                    vertical-align: middle;">
+                                D
+                            </th>
+                            <td class="cell choiceC">あなた: <span class="payoff_txt">-200</span> point<br>
+                                相手: <span class="payoff_txt">600</span> point
+                                </td>
+                            <td class="cell choiceD">あなた: <span class="payoff_txt">0</span> point<br> 
+                                相手: <span class="payoff_txt">0</span> point
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            
+        </div>
+            <div>
+                <p class="qtext">
+                    あなたが"C"、相手が"D"を選んだ場合、あなたの得られるポイントは何ポイントですか。
+                </p>
+                <div class="choicebody">
+                    {{  formfield 'q1' }}
+                </div>
+                
+            </div>
+
+    </div>
+        
+    <div id="question2" class="box">
+        <span class="qtitle">問題2</span>
+        <p class="qtext">
+            『次のラウンドも同じ相手と取引を続けますか』という質問に対して、あなたが『はい』、相手が『いいえ』を選んだ場合、どうなりますか。
+        </p>
+        {{  formfield 'q2' }}
+    </div>
+    <div id="question3" class="box">
+        <span class="qtitle">問題3</span>
+        <p class="qtext">
+            『次のラウンドも同じ相手と取引を続けますか』という質問に対して、2人とも『はい』を選んだ場合、どうなりますか。
+        </p>
+        {{  formfield 'q3' }}
+    </div>
+    <div id="slidewrapper">
+        <iframe src="https://univtokyo-my.sharepoint.com/personal/4150508401_utac_u-tokyo_ac_jp/_layouts/15/Doc.aspx?sourcedoc={91f7b9fe-b11d-4483-9862-2c05695f143b}&amp;action=embedview&amp;wdAr=1.7777777777777777" id="slidebody" height="600px" width="800px">これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>
+    </div>
+    <div id="next">
+        {{ next_button }}
+    </div>
+</body>
+
+<script>
+    {{ if form.errors }}
+        document.getElementById('alert').style.display = "block";
+    {{ endif }}
+</script>
+
+
+    
+{{ endblock }}
+
+

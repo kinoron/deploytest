@@ -13,8 +13,9 @@ SESSION_CONFIGS = [
     ),
     dict(
         name = 'prempexp_livepage',
-        app_sequence=['prempexp_livepage'],
-        num_demo_participants=20,
+        app_sequence=['prempexp_introduction',
+                      'prempexp_livepage'],
+        num_demo_participants=6,
         # use_browser_bots = True,
     ),
 ]
@@ -25,7 +26,7 @@ SESSION_CONFIGS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
+    real_world_currency_per_point=0.01, participation_fee=2500, doc=""
 )
 
 PARTICIPANT_FIELDS = []
@@ -36,7 +37,7 @@ SESSION_FIELDS = []
 LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'USD'
+REAL_WORLD_CURRENCY_CODE = 'JPY'
 USE_POINTS = True
 
 ADMIN_USERNAME = 'admin'

@@ -1,5 +1,5 @@
 {{ block title }}
-    実験の説明
+    待機中
 {{ endblock }}
 
 {{ block content }}
@@ -7,6 +7,7 @@
 <style>
     body {
         font-family: "Meiryo", sans-serif;
+        font-size: larger;
     }
     #next {
         display: flex;
@@ -29,6 +30,11 @@
     font-size: larger;
     content: '次の取引に進む';
 }
+    #slidewrapper {
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+    }
 
     .otree-btn-next::after {
         transform: rotate(45deg);
@@ -48,20 +54,24 @@
 
 <body>
     <div id="main_introduction">
-        <p>この実験には、あなたの他に数名の参加者が参加しています。</p>
-        <p>これから、あなたは他の実験参加者1人とペアを組み、取引を行います。</p>
-        <p>取引で得られる利益は、あなたのとる行動とペアの相手が取る行動の組み合わせによって決まります。これを1ラウンドとします。</p>
-        <p>取引を終えた後、あなたは今のペアとの関係を次のラウンドも続けるかどうか、選ぶことができます。</p>
-        <p>関係を断つことを選んだ場合、あなたは新しい相手とペアを組むことになります。</p>
-        <p>新しいペアの相手は、その時相手のいない他の参加者の中からランダムに選ばれます。</p>
-        <p>ペアの両方が関係を続けることを選んだ場合、次のラウンドも同じ相手と取引を行うことになります。</p>
-        <p>ただし、参加者の選択にかかわらず、確率的にペアが解散することがあります。</p>
-        <p>何ラウンドか取引を行ったあと、実験は終了します。</p>
-        <p>すべての取引で得られた利益を合計し、謝礼に反映します。</p>
+        <p>
+            理解度チェックお疲れさまでした。<br>
+            他の参加者の回答が終わるまで、このままお待ちください。<br>
+            zoomから指示があったら、「Next >」をクリックして、実験画面にお進みください。
+        </p>
     </div>
     <div id="next">
         {{ next_button }}
     </div>
+    <div>
+        <p>
+            ご自由にご覧ください。
+        </p>
+    </div>
+    <div id="slidewrapper">
+        <iframe src="https://univtokyo-my.sharepoint.com/personal/4150508401_utac_u-tokyo_ac_jp/_layouts/15/Doc.aspx?sourcedoc={91f7b9fe-b11d-4483-9862-2c05695f143b}&amp;action=embedview&amp;wdAr=1.7777777777777777" id="slidebody" height="600px" width="800px">これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>
+    </div>
+
 </body>
     
 

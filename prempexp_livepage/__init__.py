@@ -15,9 +15,11 @@ with open('prempexp_livepage/test.yaml') as f: # 果たしてこんなところ�
 class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 100
+    NUM_ROUNDS = 10
     PAYOFF_MATRIX = payoff_matrix 
-    CONTINUATION_PROB = [0, 0, 0, 0.1, 0.2, 0.4, 0.2, 0.1, 0, 0, 0, 0]
+    ENDOWMENT = 50000
+    CONTINUATION_PROB = 0.8
+    # CONTINUATION_PROB = [0, 0, 0, 0.1, 0.2, 0.4, 0.2, 0.1, 0, 0, 0, 0]
 
 
 class Subsession(BaseSubsession):
@@ -25,15 +27,15 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    max_round = models.IntegerField(initial=1)
+    # max_round = models.IntegerField(initial=1)
     continue_round = models.IntegerField(initial=1)
     end_game = models.BooleanField(initial=False)
 
-    def set_max_round(self):
-        self.max_round = random.choices(
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 
-            weights=C.CONTINUATION_PROB, 
-            k=1)[0] #恣意的に定めた確率分布から、ペアが継続する回数をペア成立時に決定
+    # def set_max_round(self):
+    #     self.max_round = random.choices(
+    #         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 
+    #         weights=C.CONTINUATION_PROB, 
+    #         k=1)[0] #恣意的に定めた確率分布から、ペアが継続する回数をペア成立時に決定
         
 
 
@@ -81,8 +83,10 @@ def set_continuation(group):
 
     if p1_decision_continue == False or p2_decision_continue == False:
         group.end_game = True
-    if group.max_round == group.continue_round:
-        group.end_game = True
+
+    group.end_game = random.random() > C.CONTINUATION_PROB
+    # if group.max_round == group.continue_round:
+    #     group.end_game = True
 
     if group.end_game == False:
         group.continue_round += 1
@@ -101,11 +105,11 @@ class Player(BasePlayer):
     timeout_continue = models.BooleanField(initial=False)
 
     is_rematched = models.BooleanField(initial=True)
-    player_max_round = models.IntegerField(initial=1)
+    # player_max_round = models.IntegerField(initial=1)
     player_continue_round = models.IntegerField(initial=1)
 
     def get_cumulative_payoff(self):
-        return sum([p.payoff for p in self.in_all_rounds() if p.payoff is not None])
+        return sum([p.payoff for p in self.in_all_rounds() if p.payoff is not None]) +C.ENDOWMENT
     
 
 
@@ -113,10 +117,10 @@ def matchingsort(subsession: Subsession):
 
     if subsession.round_number == 1:
         subsession.group_randomly()
-        for g in subsession.get_groups():
-            g.set_max_round()
-            g.get_players()[0].player_max_round = g.max_round
-            g.get_players()[1].player_max_round = g.max_round
+        # for g in subsession.get_groups():
+        #     g.set_max_round()
+        #     g.get_players()[0].player_max_round = g.max_round
+        #     g.get_players()[1].player_max_round = g.max_round
         for p in subsession.get_players():
         #     current_group = subsession.get_groups()
             p.is_rematched = True
@@ -133,7 +137,7 @@ def matchingsort(subsession: Subsession):
                 continued_groups.append(current_round_players)
                 for p in current_round_players:
                     p.is_rematched = False
-                    p.player_max_round = p.in_round(subsession.round_number - 1).player_max_round
+                    # p.player_max_round = p.in_round(subsession.round_number - 1).player_max_round
                     p.player_continue_round = p.in_round(subsession.round_number - 1).player_continue_round
             else:
                 current_round_players = [_.in_round(subsession.round_number) for _ in g.get_players()]
@@ -148,14 +152,14 @@ def matchingsort(subsession: Subsession):
         subsession.set_group_matrix(final_matrix)
 
         for g in subsession.get_groups():
-            g.set_max_round()
+        #     g.set_max_round()
             sample = g.get_players()[0] 
             if sample.is_rematched == False:
-                g.max_round = sample.player_max_round
+        #         g.max_round = sample.player_max_round
                 g.continue_round = sample.player_continue_round
-            else:
-                g.get_players()[0].player_max_round = g.max_round
-                g.get_players()[1].player_max_round = g.max_round
+        #     else:
+        #         g.get_players()[0].player_max_round = g.max_round
+        #         g.get_players()[1].player_max_round = g.max_round
 
 
 
@@ -166,9 +170,9 @@ def live_method(player: Player, data):
         p1, p2 = players
         # 先に送ってきたやつに「少々お待ちください」を表示させたい,これはjava側で実装可能でした
         if 'decision_pd' in data:
-            print("data", data)
+            # print("data", data)
             choice = data['decision_pd']
-            print(choice)
+            # print(choice)
             player.decision_pd = choice
             # print(player.decision_pd)
             # print(p1, p2)
@@ -229,10 +233,11 @@ class Match_Interaction(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         if timeout_happened:
-            player.decision_pd = random.choice([0, 1])
-            player.timeout_pd = True
-            group = player.group
-            set_payoffs(group)
+            if player.status_pd < 2:
+                player.decision_pd = random.choice([0, 1])
+                player.timeout_pd = True
+                group = player.group
+                set_payoffs(group)
 
 
     
@@ -268,10 +273,11 @@ class BreakUp(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         if timeout_happened:
-            group = player.group
-            player.decision_continue = False
-            group.end_game = True
-            player.timeout_continue = True
+            if player.status_continue < 2:
+                group = player.group
+                player.decision_continue = random.choice([0, 1])
+                set_continuation(group)
+                player.timeout_continue = True
 
 
 
@@ -284,7 +290,9 @@ class FinalResults(Page):
     
     @staticmethod
     def vars_for_template(player: Player):
-        return {'cumulative_payoff': player.get_cumulative_payoff()}
+        return {'cumulative_payoff': player.get_cumulative_payoff(),
+                'final_pay': 2500 + (player.get_cumulative_payoff()).to_real_world_currency(player.session)
+                }
 
 
 page_sequence = [

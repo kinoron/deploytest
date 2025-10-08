@@ -4,23 +4,46 @@
 
 {{ block content }}
 <style>
-    #result {
+    body {
+        font-family: "Meiryo", sans-serif;
+        font-size: larger;
+    }
+    .result {
         font-size: xx-large;
         font-weight: 600;
     }
+    .box {
+        padding: 0.5em 1em;
+        margin: 2em 0;
+        background: #FFF;
+        border: solid 3px #2589d0;
+        border-radius: 10px;
+    }
+    .box p {
+        margin: 0;
+        padding: 0;
+    }
     #participation_code {
-        font-size: xx-large;
+        font-size: xxx-large;
         font-weight: 600;
     }
 </style>
 <body>
     <p>すべての取引が終了しました。全取引を通じてあなたが得たのは、 
-        <span id="result"> {{cumulative_payoff}} </span> 
+        <span class="result"> {{cumulative_payoff}} </span> 
         でした。
     </p>
     <p>
-        あなたの参加者コード：<span id="participation_code">XXXXX</span> <br>
-        公式LINEのフォームから参加者コードを入力してください。
+        この結果を反映し、最終的に、あなたには後日<span class="result">{{final_pay}}</span>が支払われます。
+    </p>
+    <div class="box">
+        <p>
+            公式LINEのフォームから参加者コードを入力してください。<br>
+            あなたの参加者コード：<span id="participation_code">{{participant.code}}</span>
+        </p>
+        </div>
+    <p>
+        zoomから指示があるまで、この画面のままお待ちください。
     </p>
 </body>
 {{ endblock }}
