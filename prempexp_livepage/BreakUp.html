@@ -249,12 +249,6 @@
         document.getElementById('waiting_opponent').style.display = "block";
     }
 
-    if (status_continue == 2) {
-        setTimeout(function() {
-            window.location.reload();
-        }, 5000); // refresh every 5 seconds
-    }
-
     
 
     function liveRecv(data) {
@@ -267,13 +261,13 @@
             document.getElementById('waiting_opponent').style.display = "none";
             document.getElementById('main_result').style.display = "none";
         } else if (status_continue == 2) {
-            setTimeout(function() {
-            window.location.reload();
-        }, 5000); // refresh every 5 seconds
             console.log("相手を待ってるよ", status_continue)
             document.getElementById('main_question').style.display = "none";
             document.getElementById('waiting_opponent').style.display = "block";
             document.getElementById('main_result').style.display = "none";
+            setTimeout(function() {
+                window.location.reload();
+            }, 5000); // refresh every 5 seconds
         } else if (status_continue == 3) {
             if (end_game == 0) {
                 console.log("絶対次の画面に行かせるよ", status_continue)
