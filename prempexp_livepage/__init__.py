@@ -15,8 +15,9 @@ with open('prempexp_livepage/test.yaml') as f: # 果たしてこんなところ�
 class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 10
-    PAYOFF_MATRIX = payoff_matrix 
+    NUM_ROUNDS = 80
+    PAYOFF_MATRIX = payoff_matrix["round1"]   # ここで一律payoffmatrixを読み込む
+    # PAYOFF_MATRIX = payoff_matrix
     ENDOWMENT = 50000
     CONTINUATION_PROB = 0.8
     # CONTINUATION_PROB = [0, 0, 0, 0.1, 0.2, 0.4, 0.2, 0.1, 0, 0, 0, 0]
@@ -67,12 +68,12 @@ class Group(BaseGroup):
 
 def set_payoffs(group):
     p1, p2 = group.get_players()
-    continue_round = group.continue_round
+    # continue_round = group.continue_round
 
-    key1 = "round{}"
+    # key1 = "round{}"
     key2 = "({}, {})"
-
-    payoffs = C.PAYOFF_MATRIX[key1.format(continue_round)][key2.format(bool(p1.field_maybe_none('decision_pd')), bool(p2.field_maybe_none('decision_pd')))] # 継続ラウンドに応じて取り出す必要がある 入れ子の辞書が有力そう
+    payoffs = C.PAYOFF_MATRIX[key2.format(bool(p1.field_maybe_none('decision_pd')), bool(p2.field_maybe_none('decision_pd')))] # 継続ラウンドに応じて取り出す必要がある 入れ子の辞書が有力そう
+    # payoffs = C.PAYOFF_MATRIX[key1.format(continue_round)][key2.format(bool(p1.field_maybe_none('decision_pd')), bool(p2.field_maybe_none('decision_pd')))] # 継続ラウンドに応じて取り出す必要がある 入れ子の辞書が有力そう
     p1.payoff = payoffs[0]
     p2.payoff = payoffs[1]
 
@@ -88,10 +89,11 @@ def set_continuation(group):
     # if group.max_round == group.continue_round:
     #     group.end_game = True
 
-    if group.end_game == False:
-        group.continue_round += 1
-        p1.player_continue_round = group.continue_round
-        p2.player_continue_round = group.continue_round
+    # if group.end_game == False:
+        
+    #     group.continue_round += 1
+    #     p1.player_continue_round = group.continue_round
+    #     p2.player_continue_round = group.continue_round
 
 
 class Player(BasePlayer):
@@ -138,7 +140,7 @@ def matchingsort(subsession: Subsession):
                 for p in current_round_players:
                     p.is_rematched = False
                     # p.player_max_round = p.in_round(subsession.round_number - 1).player_max_round
-                    p.player_continue_round = p.in_round(subsession.round_number - 1).player_continue_round
+                    p.player_continue_round = p.in_round(subsession.round_number - 1).player_continue_round + 1
             else:
                 current_round_players = [_.in_round(subsession.round_number) for _ in g.get_players()]
                 rematch_pool.extend(current_round_players)
@@ -218,9 +220,10 @@ class Match_Interaction(Page):
     @staticmethod
     def vars_for_template(player: Player):
         group = player.group
-        continue_round = group.continue_round
-        key1 = "round{}"
-        current_payoff_matrix = C.PAYOFF_MATRIX[key1.format(continue_round)]
+        # continue_round = group.continue_round
+        # key1 = "round{}"
+        current_payoff_matrix = C.PAYOFF_MATRIX
+        # current_payoff_matrix = C.PAYOFF_MATRIX[key1.format(continue_round)]
         return {
             'payoff_CC': current_payoff_matrix['(True, True)'],
             'payoff_CD': current_payoff_matrix['(True, False)'],
