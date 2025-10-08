@@ -367,9 +367,6 @@
         document.getElementById('waiting_opponent').style.display = "block";
     }
 
-    setTimeout(function() {
-            window.location.reload();
-        }, 5000); // refresh every 5 seconds
 
     function liveRecv(data) {
         // console.log(data)
@@ -385,6 +382,9 @@
             document.getElementById('main_question').style.display = "none";
             document.getElementById('waiting_opponent').style.display = "block";
             document.getElementById('main_result').style.display = "none";
+            setTimeout(function() {
+            window.location.reload();
+        }, 5000); // refresh every 5 seconds
         } else if (status_pd == 3) {
             document.getElementById('payoff').innerText = payoff;
             document.getElementById('player_decision').innerText = player_decision? "C" : "D";

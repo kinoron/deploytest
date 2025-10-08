@@ -249,9 +249,13 @@
         document.getElementById('waiting_opponent').style.display = "block";
     }
 
-    setTimeout(function() {
+    if (status_continue == 2) {
+        setTimeout(function() {
             window.location.reload();
         }, 5000); // refresh every 5 seconds
+    }
+
+    
 
     function liveRecv(data) {
         console.log(data)
@@ -263,6 +267,9 @@
             document.getElementById('waiting_opponent').style.display = "none";
             document.getElementById('main_result').style.display = "none";
         } else if (status_continue == 2) {
+            setTimeout(function() {
+            window.location.reload();
+        }, 5000); // refresh every 5 seconds
             console.log("相手を待ってるよ", status_continue)
             document.getElementById('main_question').style.display = "none";
             document.getElementById('waiting_opponent').style.display = "block";
