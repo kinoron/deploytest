@@ -129,9 +129,6 @@ args: group
 returns: group.end_game
 """
 def set_continuation(group):
-    if getattr(group, 'temp_continue_rand', None) is None:
-        group.temp_continue_rand = random.random() # 0~1の乱数を生成し、一時的に保存
-
     p1, p2 = group.get_players() # 引数にとったグループから所属するプレイヤーを抽出
     p1_decision_continue = bool(p1.field_maybe_none('decision_continue')) #P1の選択, livepageではnullが送信される危険性があるため、field_maybe_none
     p2_decision_continue = bool(p2.field_maybe_none('decision_continue')) #P2の選択
@@ -142,6 +139,7 @@ def set_continuation(group):
 
     # ペアが継続することになった場合、乱数が0.8より大きい値だったら(20%の確率で)ペアは解散する
     if group.end_game == False:
+        group.temp_continue_rand = random.uniform(0, 1)
         if group.temp_continue_rand > C.CONTINUATION_PROB:
             group.end_game = True
     # if group.max_round == group.continue_round:
