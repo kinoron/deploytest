@@ -87,7 +87,7 @@ class Player(BasePlayer):
     timeout_pd = models.BooleanField(initial=False) # pdでタイムアウトが起こったかどうか
 
     # ペアの継続に関わる変数
-    decision_continue = models.BooleanField() # ペアの継続における意思決定 False=no continue, True=continue 初期値はnone
+    decision_continue = models.BooleanField(initial=0) # ペアの継続における意思決定 False=no continue, True=continue 初期値はnone
     status_continue = models.IntegerField(initial = 1) # ペアの継続意思決定の進行度
     timeout_continue = models.BooleanField(initial=False) # ペアの継続意思決定でタイムアウトが起こったかどうか
 
