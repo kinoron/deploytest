@@ -15,7 +15,7 @@ with open('prempexp_livepage/test.yaml') as f: # 果たしてこんなところ�
 class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 80
+    NUM_ROUNDS = 10
     PAYOFF_MATRIX = payoff_matrix["round1"]   # ここで一律payoffmatrixを読み込む
     # PAYOFF_MATRIX = payoff_matrix
     ENDOWMENT = 50000
