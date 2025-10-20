@@ -41,7 +41,7 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     
     continue_round = models.IntegerField(initial=1) # ペアの継続ラウンド数
-    temp_continue_rand = models.FloatField() # 一時的に乱数を保存する変数
+    temp_continue_rand = models.FloatField(initial=0) # 一時的に乱数を保存する変数
     end_game = models.BooleanField(initial=False) # ペアの解散フラグ 0=続く, 1=解散する
 
     # max_round = models.IntegerField(initial=1)
