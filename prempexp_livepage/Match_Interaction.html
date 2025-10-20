@@ -202,8 +202,8 @@
                         <th scope="col" colspan="2" style="font-size: larger;">あなたの行動</th>
                     </tr>
                     <tr>
-                        <th scope="col" style="font-size: xx-large;">C</th>
-                        <th scope="col" style="font-size: xx-large;">D</th>
+                        <th scope="col" style="font-size: xx-large;">A</th>
+                        <th scope="col" style="font-size: xx-large;">B</th>
                     </tr>
 
                 </thead>
@@ -218,7 +218,7 @@
                             <th scope="row" 
                             style="font-size: xx-large;
                                 vertical-align: middle;">
-                            C
+                            A
                         </th>
                             <td class="cell choiceC">あなた: <span class="payoff_txt">{{payoff_CC.0}}</span> point<br>
                                  相手: <span class="payoff_txt">{{payoff_CC.1}}</span> point
@@ -231,7 +231,7 @@
                         <th scope="row" 
                             style="font-size: xx-large;
                                 vertical-align: middle;">
-                            D
+                            B
                         </th>
                         <td class="cell choiceC">あなた: <span class="payoff_txt">{{payoff_CD.0}}</span> point<br>
                              相手: <span class="payoff_txt">{{payoff_CD.1}}</span> point
@@ -259,7 +259,7 @@
                 switch_display(); "
                 class="buttons"
                 id="coop_button">
-                    C
+                    A
                 </button>
                 <button 
                 type="button"
@@ -268,7 +268,7 @@
                 switch_display(); "
                 class="buttons"
                 id="defect_button">
-                    D
+                    B
         </button>
             </div>
             
@@ -387,8 +387,8 @@
         }, 5000); // refresh every 5 seconds
         } else if (status_pd == 3) {
             document.getElementById('payoff').innerText = payoff;
-            document.getElementById('player_decision').innerText = player_decision? "C" : "D";
-            document.getElementById('opponent_decision').innerText = opponent_decision? "C" : "D";
+            document.getElementById('player_decision').innerText = player_decision? "A" : "B";
+            document.getElementById('opponent_decision').innerText = opponent_decision? "A" : "B";
             document.getElementById('header').style.display = "none";
             document.getElementById('main_question').style.display = "none";
             document.getElementById('waiting_opponent').style.display = "none";
