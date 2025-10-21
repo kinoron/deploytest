@@ -24,7 +24,8 @@ class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2 # 参加者は2人組に分けられる
     NUM_ROUNDS = 80 # ラウンド数
-    PAYOFF_MATRIX = payoff_matrix["round1"]   # payoffmatrixを読み込む
+    EXP_COND = random.choice([0, 1]) #0=b2.8, 1=b1.4
+    PAYOFF_MATRIX = payoff_matrix[f"round{EXP_COND}"]   # payoffmatrixを読み込む
     # PAYOFF_MATRIX = payoff_matrix
     ENDOWMENT = 50000 #500円の初期支給額
     CONTINUATION_PROB = 0.8 # ペアが継続する確率
