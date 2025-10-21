@@ -23,7 +23,7 @@ with open('prempexp_livepage/test.yaml') as f:
 class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2 # 参加者は2人組に分けられる
-    NUM_ROUNDS = 10 # ラウンド数
+    NUM_ROUNDS = 80 # ラウンド数
     PAYOFF_MATRIX = payoff_matrix["round1"]   # payoffmatrixを読み込む
     # PAYOFF_MATRIX = payoff_matrix
     ENDOWMENT = 50000 #500円の初期支給額
@@ -81,8 +81,8 @@ class Group(BaseGroup):
 """
 class Player(BasePlayer):
     # pdに関わる変数
-    decision_pd = models.BooleanField() # pdにおける意思決定 False=D, True=C 初期値はnone
-    opponent_decision_pd = models.BooleanField() # 相手のpdの決定
+    decision_pd = models.BooleanField(blank=True) # pdにおける意思決定 False=D, True=C 初期値はnone
+    opponent_decision_pd = models.BooleanField(blank=True) # 相手のpdの決定
     status_pd = models.IntegerField(initial=1) # pdゲームの進行度
     timeout_pd = models.BooleanField(initial=False) # pdでタイムアウトが起こったかどうか
 
@@ -111,9 +111,7 @@ class Player(BasePlayer):
 args: group
 returns: player.payoff
 """            
-def set_payoffs(group):
-    p1, p2 = group.get_players() # 引数にとったグループから所属するプレイヤーを抽出
-
+def set_payoffs(p1, p2):
     key2 = "({}, {})" # 利得構造からセルを取り出すキー
     # 入れ子の辞書からプレイヤーの利得を取り出す, livepageではnullが送信される危険性があるため、field_maybe_none
     payoffs = C.PAYOFF_MATRIX[key2.format(bool(p1.field_maybe_none('decision_pd')), bool(p2.field_maybe_none('decision_pd')))] 
@@ -133,12 +131,15 @@ def set_continuation(group):
     p1_decision_continue = bool(p1.field_maybe_none('decision_continue')) #P1の選択, livepageではnullが送信される危険性があるため、field_maybe_none
     p2_decision_continue = bool(p2.field_maybe_none('decision_continue')) #P2の選択
 
+    if p1_decision_continue is None or p2_decision_continue is None:
+        return
+    
     # もしプレイヤーのどちらかでも「継続しない」を選んだ場合、ペアは解散する
     if p1_decision_continue == False or p2_decision_continue == False:
         group.end_game = True
 
     # ペアが継続することになった場合、乱数が0.8より大きい値だったら(20%の確率で)ペアは解散する
-    if group.end_game == False:
+    if not group.end_game  and group.temp_continue_rand == 0:
         group.temp_continue_rand = random.uniform(0, 1)
         if group.temp_continue_rand > C.CONTINUATION_PROB:
             group.end_game = True
@@ -230,14 +231,22 @@ returns: dict PDの進行状況, 結果
 """
 def live_method(player: Player, data):
         group = player.group
-        players = group.get_players()
-        p1, p2 = players
+        p1, p2 = group.get_players()
+
+        if data == {} or 'ping' in data:
+            return {
+                player.id_in_group: dict(
+                    status_pd = player.status_pd,
+                    payoff = player.payoff,
+                    player_decision = player.field_maybe_none("decision_pd"),
+                    opponent_decision = player.field_maybe_none("opponent_decision_pd"),
+                    )
+                    }
 
         # 意思決定が送信された場合の処理
         if 'decision_pd' in data:
             # データから意思決定を取り出し、プレイヤーに保存
-            choice = data['decision_pd']
-            player.decision_pd = bool(choice)
+            player.decision_pd = bool(data['decision_pd'])
             # pdゲームの進行状況を更新
             player.status_pd = 2
 
@@ -248,12 +257,12 @@ def live_method(player: Player, data):
             # print(p1.field_maybe_none("decision_pd"))
 
             # 両者の意思決定が揃った場合、利得計算を実行し、進行状況を更新
-            if p1.field_maybe_none("decision_pd") != None and p2.field_maybe_none("decision_pd") != None:
-                p1.status_pd = 3
-                p2.status_pd = 3
-                set_payoffs(group) 
+            if p1.field_maybe_none("decision_pd") is not None and p2.field_maybe_none("decision_pd") is not None:
+                set_payoffs(p1, p2) 
                 p1.opponent_decision_pd = p2.decision_pd
                 p2.opponent_decision_pd = p1.decision_pd
+                p1.status_pd = 3
+                p2.status_pd = 3
             
         
         """
@@ -268,7 +277,7 @@ def live_method(player: Player, data):
                 player_decision = p.field_maybe_none("decision_pd"),
                 opponent_decision = p.field_maybe_none("opponent_decision_pd"),
             )
-            for p in players
+            for p in (p1, p2)
         }
         
     
@@ -327,14 +336,22 @@ class Match_Interaction(Page):
     # タイムアウト時の処理
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        if timeout_happened:
-            if player.status_pd < 2: # まだ意思決定をしていなかった場合, ランダムに選択する
-                player.decision_pd = random.choice([True, False])
-                player.timeout_pd = True
-                group = player.group
-                set_payoffs(group)
+        if timeout_happened and player.status_pd < 2:
+            player.decision_pd = random.choice([True, False])
+            player.timeout_pd = True
 
-    
+            other = player.get_others_in_group()[0]
+            g = player.group
+            p1, p2 = g.get_players()
+            if (other.field_maybe_none('decision_pd') is not None):
+                set_payoffs(p1, p2)
+                if player.field_maybe_none('opponent_decision_pd') is None:
+                    player.opponent_decision_pd = other.decision_pd
+                if other.field_maybe_none('opponent_decision_pd') is None:
+                    other.opponent_decision_pd = player.decision_pd
+                player.status_pd = 3
+                other.status_pd = 3
+
     
 """
 ペアの継続意思決定ページ
@@ -351,20 +368,26 @@ class BreakUp(Page):
     @staticmethod
     def live_method(player: Player, data):
         group = player.group
-        players = group.get_players()
-        p1, p2 = players
+        p1, p2 = group.get_players()
+
+        if data == {} or 'ping' in data:
+            return {
+                player.id_in_group: dict(
+                    status_continue = player.status_continue,
+                    end_game = group.end_game,
+                )
+            }
 
         # 意思決定が送信された場合の処理
         if 'decision_continue' in data:
             print("data", data)
             # データから意思決定を取り出し、プレイヤーに保存
-            choice = data['decision_continue']
-            player.decision_continue = bool(choice)
+            player.decision_continue = bool(data['decision_continue'])
             # ペアの継続意思決定の進行状況を更新
             player.status_continue = 2
 
             # 両者の意思決定が揃った場合、継続判定を実行し、進行状況を更新
-            if p1.field_maybe_none('decision_continue') != None and p2.field_maybe_none('decision_continue') != None:
+            if p1.field_maybe_none('decision_continue') is not None and p2.field_maybe_none('decision_continue') is not None:
                     set_continuation(group)
                     p1.status_continue = 3
                     p2.status_continue = 3
@@ -375,18 +398,26 @@ class BreakUp(Page):
                 status_continue = p.status_continue,
                 end_game = group.end_game
                 )
-                for p in players
+                for p in (p1, p2)
                 }
     
     # タイムアウト時の処理
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         if timeout_happened:
+            g = player.group
+            p1, p2 = g.get_players()
+            player.timeout_continue = True
+
             if player.status_continue < 2: # まだ意思決定をしていなかった場合, ランダムに選択する
-                group = player.group
                 player.decision_continue = random.choice([True, False])
-                set_continuation(group)
-                player.timeout_continue = True
+                player.status_continue = 2
+
+            other = player.get_others_in_group()[0]
+            if other.field_maybe_none('decision_continue') is not None:
+                set_continuation(g)
+                p1.status_continue = 3
+                p2.status_continue = 3
 
 
 """
