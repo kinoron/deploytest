@@ -17,8 +17,8 @@ SESSION_CONFIGS = [
                       'prempexp_livepage'],
         num_demo_participants=6,
         # use_browser_bots = True,
-        exp_cond = 1, 
-        doc="0はb=２.8, 1はb=1.4, デフォルトは1とする"
+        # exp_cond = 1, 
+        # doc="0はb=２.8, 1はb=1.4, デフォルトは1とする"
     ),
 ]
 
