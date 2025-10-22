@@ -1,0 +1,5 @@
+round1:
+  (True, True): [450, 450] 
+  (True, False): [-250, 700]
+  (False, True): [700, -250]
+  (False, False): [0, 0]

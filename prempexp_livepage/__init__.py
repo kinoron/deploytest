@@ -13,7 +13,7 @@ csv等から利得行列を読み込める仕組み必須
 """
 利得行列をyamlファイルから読み込む
 """
-with open('prempexp_livepage/test.yaml') as f: 
+with open('prempexp_livepage/param28.yaml') as f: 
     payoff_matrix = yaml.safe_load(f)
 
 
@@ -24,8 +24,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'prempexp_livepage'
     PLAYERS_PER_GROUP = 2 # 参加者は2人組に分けられる
     NUM_ROUNDS = 80 # ラウンド数
-    # EXP_COND = random.choice([0, 1]) #0=b2.8, 1=b1.4
-    PAYOFF_MATRIX = payoff_matrix[f"round{session.config['exp_cond']}"]   # payoffmatrixを読み込む
+    PAYOFF_MATRIX = payoff_matrix["round1"]   # payoffmatrixを読み込む
     # PAYOFF_MATRIX = payoff_matrix
     ENDOWMENT = 50000 #500円の初期支給額
     CONTINUATION_PROB = 0.8 # ペアが継続する確率
