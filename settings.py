@@ -41,6 +41,7 @@ LANGUAGE_CODE = 'en'
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'JPY'
 USE_POINTS = True
+REAL_WORLD_CURRENCY_DECIMAL_PLACES = 0
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
