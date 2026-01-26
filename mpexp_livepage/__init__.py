@@ -23,7 +23,7 @@ with open('mpexp_livepage/param28.yaml') as f:
 class C(BaseConstants):
     NAME_IN_URL = 'mpexp_livepage'
     PLAYERS_PER_GROUP = 2 # 参加者は2人組に分けられる
-    NUM_ROUNDS = 1 # ラウンド数
+    NUM_ROUNDS = 5 # ラウンド数
     PAYOFF_MATRIX = payoff_matrix["round1"]   # payoffmatrixを読み込む
     ENDOWMENT = 50000 #500円の初期支給額
     CONTINUATION_PROB = 0.8 # ペアが継続する確率
