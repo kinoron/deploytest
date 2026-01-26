@@ -1,0 +1,80 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    社会的価値志向の結果
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-primary" role="alert">
+        {% if subsession.select_items == 'FULL' %}
+            あなたは完全な質問に答えました。
+        {% elif subsession.select_items == 'PRIMARY' %}
+            あなたは主要な質問に答えました。
+        {% endif %}
+
+        <p>
+            {% if subsession.matching == 'RANDOM_DICTATOR'  %}
+                {% if player.is_sender == True %}
+                    あなたは送信者としてランダムに選択されました。
+                    <br/>
+                    スライダー {{ player.paid_slider }} が支払いに選択されました。
+                {% endif %}
+                {% if player.is_receiver == True %}
+                    あなたは受信者としてランダムに選択されました。
+                    <br/>
+                    スライダー {{ player.slider_as_receiver }} が支払いに選択されました。
+                {% endif %}
+                </p>
+
+                </div>
+
+            {% endif %}
+
+
+    {% if subsession.matching == 'RING'  %}
+        <div class="alert alert-primary" role="alert">
+            <p>
+                スライダー {{ player.paid_slider }} が支払いに選択されました。
+            </p>
+            <p>
+                受信者として、あなたは {{ player.received_from_sender }} を受け取りました。
+            </p>
+            <p>
+                送信者として、あなたは {{ player.kept_of_sender }} を保持しました。
+            </p>
+        </div>
+    {% endif %}
+
+    <div class="alert alert-info" role="alert">
+        したがって、あなたの利益は {{ player.payoff }} です。
+    </div>
+
+    <div class="alert alert-light" role="alert">
+        <br> あなたの社会的価値志向角度は {{player.svo_angle|floatformat:2}} です。
+        <br> あなたのアルファは {{player.alpha|floatformat:2}} です。
+        <br> あなたのSVOタイプは {{player.svo_type}} です。
+        <br> あなたの不平等回避スコアは {{player.inequality_aversion_score}} です。
+    </div>
+
+
+
+{% endblock %}
+
+
+{% block styles %}
+    <style>
+
+        .col-centered {
+            display:inline-block;
+            float:none;
+            /* reset the text-align */
+        {#text-align:left;#}
+            /* inline-block space fix */
+            margin-right:-4px;
+            text-align: center;
+        }
+
+    </style>
+{% endblock %}
+

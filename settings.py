@@ -20,6 +20,37 @@ SESSION_CONFIGS = [
         # exp_cond = 1, 
         # doc="0はb=２.8, 1はb=1.4, デフォルトは1とする"
     ),
+    dict(
+        name = 'mpexp_livepage',
+        app_sequence=[#'mpexp_introduction',
+                      'mpexp_livepage',
+                      'mpexp_demographic'
+                      ],
+        num_demo_participants=6,
+    ),
+    # {
+    #     'name': 'svo',
+    #     'display_name': "Social Value Orientation",
+    #     'num_demo_participants': 2,
+    #     'app_sequence': ['svo'],
+    #     'matching': 'RING',
+    #     'select_items': 'FULL',
+    #     'items_in_random_order': False,
+    #     'scale': 0.1 ,
+    #     'slider_init': 'LEFT',
+    #     'random_payoff': 'RAND',
+    #     'precision': 'INTEGERS',
+    #     'doc': """
+    #     Edit the 'matching' parameter to select RING matching or 
+    #     RANDOM_DICTATOR matching.</br>
+    #     Edit the 'select_items' parameter to whether we use the first six items 
+    #     to calculate the payoff (PRIMARY) or the 15 items (FULL).</br>
+    #     Edit the 'scale' parameter to scale the slider values.</br>
+    #     Edit the 'slider_init' parameter with LEFT, RIGHT, RAND or AVG to initialize the slider.</br>
+    #     Edit the 'random_payoff' parameter with RAND or SUM to determine the way to calculate the payoff.</br>
+    #     Edit the 'precision' parameter with TWO_DIGITS_AFTER_POINT or INTEGERS.
+    #     """
+    # },
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -31,7 +62,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=0.01, participation_fee=2500, doc=""
 )
 
-PARTICIPANT_FIELDS = []
+PARTICIPANT_FIELDS = ['cumulative_payoff']
 SESSION_FIELDS = []
 
 # ISO-639 code
@@ -52,4 +83,8 @@ DEMO_PAGE_INTRO_HTML = """ """
 SECRET_KEY = '7113264272484'
 
 DEBUG = False
+
+ALLOWED_HOSTS = ['*']
+
+INSTALLED_APPS = ['otree']
 

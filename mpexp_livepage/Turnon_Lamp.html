@@ -1,0 +1,118 @@
+{{ block title }}
+    ランプをつけますか？
+{{ endblock }}
+{{ block content }}
+
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+    }
+
+    #new_comer_msg {
+        display: flex;
+        align-items: center;
+        grid-gap: 0 .7em;
+        margin: 0 auto;
+        padding: 1em;
+        border-radius: 5px;
+        background-color: #ffebee;
+        color: #333333;
+        font-size: larger;
+    }
+
+    #new_comer_msg::before {
+        width: 24px;
+        height: 12px;
+        border-bottom: 6px solid #f06060;
+        border-left: 6px solid #f06060;
+        transform: rotate(-45deg) translate(2.5px, -2.5px);
+        content: '';
+    }
+
+    #new_comer_msg p {
+        margin: 0;
+        padding: 0 0 0 .7em;
+        border-left: 1px solid #f06060;
+    }
+
+    #signal_discription {
+        margin-top: 20px;
+        margin-bottom: 50px;
+        font-size: larger;
+    }
+    
+    #button_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 5em;
+        margin-top: 50px;
+    }
+    .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 65px;
+    margin: 0 auto;
+    padding: .9em 2em;
+    border: 1px solid #2589d0;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #2589d0;
+    font-size: xx-large;
+    }
+
+    .buttons:hover {
+        border: none;
+        background-color: #2589d0;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .otree-timer {
+        display: none;
+    }
+
+</style>
+
+<div id="new_comer">
+        <p id="new_comer_msg">
+        新しい相手と取引を始めます。</p>
+</div>
+
+<div id="signal_discription">
+    <p>
+        新しい相手と取引を始める前に、ランプをつけることができます。<br>
+        相手は、あなたがランプをつけたかどうか見ることができます。<br>
+        ランプをつけるには250 pointかかります。
+    </p>
+</div>
+<div id="signal_image" style="text-align: center;">
+    <img src="{{  static 'mpexp_livepage/signal_sending.png' }}" width="500px">
+</div>
+
+<div id="signal_not">
+    <div id="signal_not_msg" style="align-items: center; font-size: larger;">
+        <p>ランプをつけますか？</p>
+    </div>
+    <div id="button_container">
+        <button 
+        name="decision_signal" 
+        value="False"
+        class="buttons">
+        ランプをつけない
+        </button>
+
+        <button 
+        name="decision_signal" 
+        value="True"
+        class="buttons">
+        ランプをつける
+        </button>
+    </div>
+    
+</div>
+
+
+{{ endblock }}

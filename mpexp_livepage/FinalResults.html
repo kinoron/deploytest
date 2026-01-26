@@ -1,0 +1,76 @@
+{{ block title }}
+実験終了
+{{ endblock }}
+
+{{ block content }}
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+        font-size: larger;
+    }
+    
+    .box {
+        padding: 0.5em 1em;
+        margin: 2em 0;
+        background: #FFF;
+        border: solid 3px #2589d0;
+        border-radius: 10px;
+        font-size: x-large;
+    }
+    .box p {
+        margin: 0;
+        padding: 0;
+    }
+    #next {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 100px;
+    }
+
+    .otree-btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin:0 auto;
+    padding: .9em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+    font-size: larger;
+    content: '次の取引に進む';
+}
+
+    .otree-btn-next::after {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        content: '';
+    }
+
+    .otree-btn-next:hover {
+        background-color: #1579c0;
+    }
+</style>
+<body>
+    <div class="box">
+        <p>
+            全てのラウンドが終了しました。<br>
+            これより、結果の集計を行います。<br>
+            その間に、次のページのアンケートにご回答ください。<br>
+            「Next」ボタンを押して次のページに進んでください。
+        </p>
+    </div>
+    
+
+    <div id="next">
+        {{ next_button}}
+    </div>
+    
+</body>
+{{ endblock }}
