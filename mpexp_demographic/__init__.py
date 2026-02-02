@@ -34,7 +34,10 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
         label="",
     )
-    svoA = make_field(svoA)
+    svoA = models.IntegerField(
+        choices = [1,2,3,4,5,6,7,8,9],
+        widget = widgets.RadioSelect,
+    )
     # svoA7 = make_field("svoA7")
     # svoA8 = make_field("svoA8")
     # svoA9 = make_field("svoA9")
