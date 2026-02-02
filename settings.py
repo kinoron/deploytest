@@ -76,7 +76,8 @@ REAL_WORLD_CURRENCY_DECIMAL_PLACES = 0
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
-ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
+ADMIN_PASSWORD = 'ohtsubolab'
+AUTH_LEVEL = 'STUDY'
 
 DEMO_PAGE_INTRO_HTML = """ """
 

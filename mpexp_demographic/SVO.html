@@ -1,0 +1,433 @@
+{{ block title }}
+    実験終了後アンケート
+{{ endblock }}
+
+{{ block content }}
+
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+        font-size: larger;
+    }
+
+    #question_svo {
+        display: block;
+    }
+
+    #svoA1, #svoA2, #svoA3, #svoA4, #svoA5, #svoA6 {
+        display: none;
+        margin-bottom: 50px;
+    }
+
+    .box {
+        position: relative;
+        max-width: 1200px;
+        margin: 3em auto;
+        padding: 1em 1.5em;
+        border: 2px solid #2589d0;
+        border-radius: 3px;
+    }
+
+    .qtitle {
+        position: absolute;
+        top: -1.9em;
+        left: -2px;
+        padding: .2em .8em;
+        border-radius: 5px 5px 0 0;
+        background-color: #2589d0;
+        color: #fff;
+    }
+
+    .question_label p {
+        font-weight: 600;
+        font-size: larger;
+    }
+
+    .format_svo {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        font-size: x-large;
+        display: flex;
+        justify-content: center;
+    }
+
+    #next {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 100px;
+    }
+
+    .otree-btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin:0 auto;
+    padding: .9em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+    font-size: larger;
+    content: '結果に進む';
+}
+
+    .otree-btn-next::after {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        content: '';
+    }
+
+    .otree-btn-next:hover {
+        background-color: #1579c0;
+    }
+
+</style>
+
+<div>
+    <div id="question_svo" >
+        <div id="question_announce">
+        <p>
+            ここでは、みなさんには架空の報酬分配場面で、自分と架空のパートナーとの間で、どのように報酬を分けるのが望ましいと思うかをうかがいます。<br>
+            分配方法は１から９の９通りです。９通りの分配では、必ずしも２人の報酬の合計が同じではないことに注意してください。<br>
+        </p>
+    </div>
+        <div id="svoA1" class="box">
+            <span class="qtitle">設問3-1</span>
+            <p>
+                以下の９通りの分配のうち、もし自分が好きなように分配方法を選ぶことができるとしたら、どれを選びますか？<br>
+                あなたにとって一番望ましい分配方法にチェックしてください。
+            </p>
+            <table class="table table-bordered text-center">
+                <thead style="font-size: medium;">
+                    <tr>
+                        <td></td>
+                        <td>方法1</td>
+                        <td>方法2</td>
+                        <td>方法3</td>
+                        <td>方法4</td>
+                        <td>方法5</td>
+                        <td>方法6</td>
+                        <td>方法7</td>
+                        <td>方法8</td>
+                        <td>方法9</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">あなた</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">850円</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        {{ for choice in form.svoA}}
+                        <td><label for="">{{ choice }}</label></td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th scope="row">相手</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">760円</th>
+                        <th scope="col">680円</th>
+                        <th scope="col">590円</th>
+                        <th scope="col">500円</th>
+                        <th scope="col">410円</th>
+                        <th scope="col">330円</th>
+                        <th scope="col">240円</th>
+                        <th scope="col">150円</th>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+            
+        <div id="svoA2" class="box">
+            <span class="qtitle">設問3-2</span>
+            <p>
+                以下の９通りの分配のうち、もし自分が好きなように分配方法を選ぶことができるとしたら、どれを選びますか？<br>
+                あなたにとって一番望ましい分配方法にチェックしてください。<br>
+            </p>
+            <table class="table table-bordered text-center">
+                <thead style="font-size: medium;">
+                    <td></td>
+                    {{ for item in ['方法1', '方法2', '方法3', '方法4', '方法5', '方法6', '方法7', '方法8', '方法9'] }}
+                    <td>{{ item }}</td>
+                    {{ endfor }}
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">あなた</th>
+                        <th scope="col">850円</th>
+                        <th scope="col">870円</th>
+                        <th scope="col">890円</th>
+                        <th scope="col">910円</th>
+                        <th scope="col">930円</th>
+                        <th scope="col">940円</th>
+                        <th scope="col">960円</th>
+                        <th scope="col">980円</th>
+                        <th scope="col">1000円</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        {{ for choice in form.svoA}}
+                        <td><label for="">{{ choice }}</label></td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th scope="row">相手</th>
+                        <th scope="col">150円</th>
+                        <th scope="col">190円</th>
+                        <th scope="col">240円</th>
+                        <th scope="col">280円</th>
+                        <th scope="col">330円</th>
+                        <th scope="col">370円</th>
+                        <th scope="col">410円</th>
+                        <th scope="col">460円</th>
+                        <th scope="col">500円</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="svoA3" class="box">
+            <span class="qtitle">設問3-3</span>
+            <p>
+                以下の９通りの分配のうち、もし自分が好きなように分配方法を選ぶことができるとしたら、どれを選びますか？<br>
+                あなたにとって一番望ましい分配方法にチェックしてください。<br>
+            </p>
+            <table class="table table-bordered text-center">
+                <thead style="font-size: medium;">
+                    <td></td>
+                    {{ for item in ['方法1', '方法2', '方法3', '方法4', '方法5', '方法6', '方法7', '方法8', '方法9'] }}
+                    <td>{{ item }}</td>
+                    {{ endfor }}
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">あなた</th>
+                        <th scope="col">500円</th>
+                        <th scope="col">540円</th>
+                        <th scope="col">590円</th>
+                        <th scope="col">630円</th>
+                        <th scope="col">680円</th>
+                        <th scope="col">720円</th>
+                        <th scope="col">760円</th>
+                        <th scope="col">810円</th>
+                        <th scope="col">850円</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        {{ for choice in form.svoA}}
+                        <td><label for="">{{ choice }}</label></td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th scope="row">相手</th>
+                        <th scope="col">1000円</th>
+                        <th scope="col">980円</th>
+                        <th scope="col">960円</th>
+                        <th scope="col">940円</th>
+                        <th scope="col">930円</th>
+                        <th scope="col">910円</th>
+                        <th scope="col">890円</th>
+                        <th scope="col">870円</th>
+                        <th scope="col">850円</th>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div id="svoA4" class="box">
+            <span class="qtitle">設問3-4</span>
+            <p>
+                以下の９通りの分配のうち、もし自分が好きなように分配方法を選ぶことができるとしたら、どれを選びますか？<br>
+                あなたにとって一番望ましい分配方法にチェックしてください。<br>
+            </p>
+            <table class="table table-bordered text-center">
+                <thead style="font-size: medium;">
+                    <td></td>
+                    {{ for item in ['方法1', '方法2', '方法3', '方法4', '方法5', '方法6', '方法7', '方法8', '方法9'] }}
+                    <td>{{ item }}</td>
+                    {{ endfor }}
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">あなた</th>
+                        <th scope="col">500円</th>
+                        <th scope="col">540円</th>
+                        <th scope="col">590円</th>
+                        <th scope="col">630円</th>
+                        <th scope="col">680円</th>
+                        <th scope="col">720円</th>
+                        <th scope="col">760円</th>
+                        <th scope="col">810円</th>
+                        <th scope="col">850円</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        {{ for choice in form.svoA}}
+                        <td><label for="">{{ choice }}</label></td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th scope="row">相手</th>
+                        <th scope="col">1000円</th>
+                        <th scope="col">890円</th>
+                        <th scope="col">790円</th>
+                        <th scope="col">680円</th>
+                        <th scope="col">580円</th>
+                        <th scope="col">470円</th>
+                        <th scope="col">360円</th>
+                        <th scope="col">260円</th>
+                        <th scope="col">150円</th>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div id="svoA5" class="box">
+            <span class="qtitle">設問3-5</span>
+            <p>
+                以下の９通りの分配のうち、もし自分が好きなように分配方法を選ぶことができるとしたら、どれを選びますか？<br>
+                あなたにとって一番望ましい分配方法にチェックしてください。<br>
+            </p>
+            <table class="table table-bordered text-center">
+                <thead style="font-size: medium;">
+                    <td></td>
+                    {{ for item in ['方法1', '方法2', '方法3', '方法4', '方法5', '方法6', '方法7', '方法8', '方法9'] }}
+                    <td>{{ item }}</td>
+                    {{ endfor }}
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">あなた</th>
+                        <th scope="col">1000円</th>
+                        <th scope="col">940円</th>
+                        <th scope="col">880円</th>
+                        <th scope="col">810円</th>
+                        <th scope="col">750円</th>
+                        <th scope="col">690円</th>
+                        <th scope="col">630円</th>
+                        <th scope="col">560円</th>
+                        <th scope="col">500円</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        {{ for choice in form.svoA}}
+                        <td><label for="">{{ choice }}</label></td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th scope="row">相手</th>
+                        <th scope="col">500円</th>
+                        <th scope="col">560円</th>
+                        <th scope="col">640円</th>
+                        <th scope="col">690円</th>
+                        <th scope="col">750円</th>
+                        <th scope="col">810円</th>
+                        <th scope="col">880円</th>
+                        <th scope="col">940円</th>
+                        <th scope="col">1000円</th>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div id="svoA6" class="box">
+            <span class="qtitle">設問3-6</span>
+            <p>
+                以下の９通りの分配のうち、もし自分が好きなように分配方法を選ぶことができるとしたら、どれを選びますか？<br>
+                あなたにとって一番望ましい分配方法にチェックしてください。<br>
+            </p>
+            <table class="table table-bordered text-center">
+                <thead style="font-size: medium;">
+                    <td></td>
+                    {{ for item in ['方法1', '方法2', '方法3', '方法4', '方法5', '方法6', '方法7', '方法8', '方法9'] }}
+                    <td>{{ item }}</td>
+                    {{ endfor }}
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">あなた</th>
+                        <th scope="col">1000円</th>
+                        <th scope="col">980円</th>
+                        <th scope="col">960円</th>
+                        <th scope="col">940円</th>
+                        <th scope="col">930円</th>
+                        <th scope="col">910円</th>
+                        <th scope="col">890円</th>
+                        <th scope="col">870円</th>
+                        <th scope="col">850円</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        {{ for choice in form.svoA}}
+                        <td><label for="">{{ choice }}</label></td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th scope="row">相手</th>
+                        <th scope="col">500円</th>
+                        <th scope="col">540円</th>
+                        <th scope="col">590円</th>
+                        <th scope="col">630円</th>
+                        <th scope="col">680円</th>
+                        <th scope="col">720円</th>
+                        <th scope="col">760円</th>
+                        <th scope="col">810円</th>
+                        <th scope="col">850円</th>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="announcement">
+        <p>
+            チェックできたら、下の「Next」ボタンを押して次の設問に進んでください。
+        </p>
+    </div>
+    <div id="next">
+        {{ next_button }}
+    </div>
+</div>
+
+
+
+<script>
+
+{{ if player.round_number == 1 }}
+    document.getElementById('svoA1').style.display = "block";
+{{ elif player.round_number == 2 }}
+    document.getElementById('svoA2').style.display = "block";
+{{ elif player.round_number == 3 }}
+    document.getElementById('svoA3').style.display = "block";
+{{ elif player.round_number == 4 }}
+    document.getElementById('svoA4').style.display = "block";
+{{ elif player.round_number == 5 }}
+    document.getElementById('svoA5').style.display = "block";
+{{ elif player.round_number == 6 }}
+    document.getElementById('svoA6').style.display = "block";
+{{ endif }}
+
+</script>
+
+{{ endblock }}

@@ -29,12 +29,14 @@
     }
 </style>
 <body>
-    <p>すべての取引が終了しました。全取引を通じてあなたが得たのは、 
+    <p>すべての実験およびアンケートが終了しました。<br>
+        全取引を通じてあなたが得たのは、 
         <span class="result"> {{totalpayoff_ingame}} </span> 
-        でした。
-    </p>
-    <p>
-        この結果を反映し、最終的に、あなたには後日<span class="result">{{finalpay_inreal}}</span>が支払われます。
+        でした。<br><br>
+        よって、あなたには後日<span class="result">{{finalpay_inreal}}</span>が支払われます。<br>
+        <span style="font-size: medium;">
+            (最終支払額: 固定報酬 2500円 + 取引結果に基づく変動報酬 {{totalpayoff_inreal}} = {{finalpay_inreal}})
+        </span>
     </p>
     <div class="box">
         <p>

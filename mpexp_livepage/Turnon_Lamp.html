@@ -17,7 +17,7 @@
         border-radius: 5px;
         background-color: #ffebee;
         color: #333333;
-        font-size: larger;
+        font-size: x-large;
     }
 
     #new_comer_msg::before {
@@ -37,8 +37,9 @@
 
     #signal_discription {
         margin-top: 20px;
-        margin-bottom: 50px;
+        margin-bottom: 20px;
         font-size: larger;
+        height: 120px;
     }
     
     #button_container {
@@ -46,7 +47,7 @@
         justify-content: center;
         align-items: center;
         column-gap: 5em;
-        margin-top: 50px;
+        margin-top: 20px;
     }
     .buttons {
     display: flex;
@@ -82,19 +83,19 @@
 </div>
 
 <div id="signal_discription">
-    <p>
+    <p style="font-size: x-large;">
         新しい相手と取引を始める前に、ランプをつけることができます。<br>
         相手は、あなたがランプをつけたかどうか見ることができます。<br>
         ランプをつけるには250 pointかかります。
     </p>
 </div>
 <div id="signal_image" style="text-align: center;">
-    <img src="{{  static 'mpexp_livepage/signal_sending.png' }}" width="500px">
+    <img src="{{  static 'mpexp_livepage/match_interaction_turnoff.png' }}" width="300px">
 </div>
 
 <div id="signal_not">
     <div id="signal_not_msg" style="align-items: center; font-size: larger;">
-        <p>ランプをつけますか？</p>
+        <p style="font-size: x-large;">あなたの行動を選んでください。</p>
     </div>
     <div id="button_container">
         <button 

@@ -38,12 +38,6 @@
         font-size: larger;
     }
 
-    .format_svo {
-        margin-top: 100px;
-        margin-bottom: 100px;
-        font-size: x-large;
-    }
-
     #next {
         display: flex;
         justify-content: flex-end;
@@ -82,6 +76,7 @@
 
 </style>
 
+<div>
     <div class="announcement">
         <p>
             実験お疲れさまでした。<br>
@@ -108,244 +103,12 @@
             {{ formfield 'gender' }}
         </div>
 
-        <div id="question_svo" class="box">
-            <span class="qtitle">設問3</span>
-            <div class="question_label">
-                <p>
-                    あなたとペアになった相手とで報酬を分け合うとします。<br>
-                    以下の各表では、上段があなたの報酬、下段が相手の報酬を示しています。<br>
-                    各表の中で、あなたにとって好ましい分配を選んでください。
-                </p>
-            </div>
-            <div id="svoA1" class="format_svo">
-            <table class="table table-bordered text-center">
-                <thead>
-                    <th scope="row">あなた</th>
-                    <th scope="col">85</th>
-                    <th scope="col">85</th>
-                    <th scope="col">85</th>
-                    <th scope="col">85</th>
-                    <th scope="col">85</th>
-                    <th scope="col">85</th>
-                    <th scope="col">85</th>
-                    <th scope="col">85</th>
-                    <th scope="col">85</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th></th>
-                        {{ for choice in form.svoA1}}
-                        <td><label for="">{{ choice }}</label></td>
-                        {{ endfor }}
-                    </tr>
-                    <tr>
-                        <th scope="row">相手</th>
-                        <th scope="col">85</th>
-                        <th scope="col">76</th>
-                        <th scope="col">68</th>
-                        <th scope="col">59</th>
-                        <th scope="col">50</th>
-                        <th scope="col">41</th>
-                        <th scope="col">33</th>
-                        <th scope="col">24</th>
-                        <th scope="col">15</th>
-                    </tr>
-                </tbody>
-            </table>
-
-            </div>
-            <div id="svoA2" class="format_svo">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <th scope="row">あなた</th>
-                        <th scope="col">85</th>
-                        <th scope="col">87</th>
-                        <th scope="col">89</th>
-                        <th scope="col">91</th>
-                        <th scope="col">93</th>
-                        <th scope="col">94</th>
-                        <th scope="col">96</th>
-                        <th scope="col">98</th>
-                        <th scope="col">100</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            {{ for choice in form.svoA2}}
-                            <td><label for="">{{ choice }}</label></td>
-                            {{ endfor }}
-                        </tr>
-                        <tr>
-                            <th scope="row">相手</th>
-                            <th scope="col">15</th>
-                            <th scope="col">19</th>
-                            <th scope="col">24</th>
-                            <th scope="col">28</th>
-                            <th scope="col">33</th>
-                            <th scope="col">37</th>
-                            <th scope="col">41</th>
-                            <th scope="col">46</th>
-                            <th scope="col">50</th>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-            <div id="svoA3" class="format_svo">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <th scope="row">あなた</th>
-                        <th scope="col">50</th>
-                        <th scope="col">54</th>
-                        <th scope="col">59</th>
-                        <th scope="col">63</th>
-                        <th scope="col">68</th>
-                        <th scope="col">72</th>
-                        <th scope="col">76</th>
-                        <th scope="col">81</th>
-                        <th scope="col">85</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            {{ for choice in form.svoA3}}
-                            <td><label for="">{{ choice }}</label></td>
-                            {{ endfor }}
-                        </tr>
-                        <tr>
-                            <th scope="row">相手</th>
-                            <th scope="col">100</th>
-                            <th scope="col">98</th>
-                            <th scope="col">96</th>
-                            <th scope="col">94</th>
-                            <th scope="col">93</th>
-                            <th scope="col">91</th>
-                            <th scope="col">89</th>
-                            <th scope="col">87</th>
-                            <th scope="col">85</th>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-            <div id="svoA4" class="format_svo">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <th scope="row">あなた</th>
-                        <th scope="col">50</th>
-                        <th scope="col">54</th>
-                        <th scope="col">59</th>
-                        <th scope="col">63</th>
-                        <th scope="col">68</th>
-                        <th scope="col">72</th>
-                        <th scope="col">76</th>
-                        <th scope="col">81</th>
-                        <th scope="col">85</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            {{ for choice in form.svoA4}}
-                            <td><label for="">{{ choice }}</label></td>
-                            {{ endfor }}
-                        </tr>
-                        <tr>
-                            <th scope="row">相手</th>
-                            <th scope="col">100</th>
-                            <th scope="col">89</th>
-                            <th scope="col">79</th>
-                            <th scope="col">68</th>
-                            <th scope="col">58</th>
-                            <th scope="col">47</th>
-                            <th scope="col">36</th>
-                            <th scope="col">26</th>
-                            <th scope="col">15</th>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-            <div id="svoA5" class="format_svo">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <th scope="row">あなた</th>
-                        <th scope="col">100</th>
-                        <th scope="col">94</th>
-                        <th scope="col">88</th>
-                        <th scope="col">81</th>
-                        <th scope="col">75</th>
-                        <th scope="col">69</th>
-                        <th scope="col">63</th>
-                        <th scope="col">56</th>
-                        <th scope="col">50</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            {{ for choice in form.svoA5}}
-                            <td><label for="">{{ choice }}</label></td>
-                            {{ endfor }}
-                        </tr>
-                        <tr>
-                            <th scope="row">相手</th>
-                            <th scope="col">50</th>
-                            <th scope="col">56</th>
-                            <th scope="col">64</th>
-                            <th scope="col">69</th>
-                            <th scope="col">75</th>
-                            <th scope="col">81</th>
-                            <th scope="col">88</th>
-                            <th scope="col">94</th>
-                            <th scope="col">100</th>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-            <div id="svoA6" class="format_svo">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <th scope="row">あなた</th>
-                        <th scope="col">100</th>
-                        <th scope="col">98</th>
-                        <th scope="col">96</th>
-                        <th scope="col">94</th>
-                        <th scope="col">93</th>
-                        <th scope="col">91</th>
-                        <th scope="col">89</th>
-                        <th scope="col">87</th>
-                        <th scope="col">85</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            {{ for choice in form.svoA6}}
-                            <td><label for="">{{ choice }}</label></td>
-                            {{ endfor }}
-                        </tr>
-                        <tr>
-                            <th scope="row">相手</th>
-                            <th scope="col">50</th>
-                            <th scope="col">54</th>
-                            <th scope="col">59</th>
-                            <th scope="col">63</th>
-                            <th scope="col">68</th>
-                            <th scope="col">72</th>
-                            <th scope="col">76</th>
-                            <th scope="col">81</th>
-                            <th scope="col">85</th>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-    </div>
+</div>
         
     
     <div class="announcement">
         <p>
-            回答が終わりましたら、下の「Next」ボタンを押して次の画面に進んでください。
+            下の「Next」ボタンを押して次の設問に進んでください。
         </p>
     </div>
 

@@ -23,7 +23,7 @@ with open('mpexp_livepage/param28.yaml') as f:
 class C(BaseConstants):
     NAME_IN_URL = 'mpexp_livepage'
     PLAYERS_PER_GROUP = 2 # 参加者は2人組に分けられる
-    NUM_ROUNDS = 5 # ラウンド数
+    NUM_ROUNDS = 3 # ラウンド数
     PAYOFF_MATRIX = payoff_matrix["round1"]   # payoffmatrixを読み込む
     ENDOWMENT = 50000 #500円の初期支給額
     CONTINUATION_PROB = 0.8 # ペアが継続する確率
@@ -291,7 +291,7 @@ class MatchingWaitPage(WaitPage):
 20秒のタイムアウトあり
 """
 class Turnon_Lamp(Page):
-    timeout_seconds = 20
+    timeout_seconds = 60
 
     @staticmethod
     def is_displayed(player: Player):
@@ -308,7 +308,14 @@ class Turnon_Lamp(Page):
             player.timeout_signal = True
         
 
-            
+class Feedback_Lamp(Page):
+    timeout_seconds = 10
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.player_continue_round == 1
+    
+
 
 """
 シグナル後の待ちページ
@@ -462,6 +469,7 @@ class FinalResults(Page):
 page_sequence = [
     MatchingWaitPage,
     Turnon_Lamp,
+    Feedback_Lamp,
     Lamp_WaitPage,
     Match_Interaction,
     BreakUp,

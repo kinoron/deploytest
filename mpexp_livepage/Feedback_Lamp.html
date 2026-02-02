@@ -1,0 +1,150 @@
+{{ block title }}
+    ランプをつけますか？
+{{ endblock }}
+
+
+{{ block content }}
+
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+        font-size: larger;
+    }
+
+    #new_comer_msg {
+        display: flex;
+        align-items: center;
+        grid-gap: 0 .7em;
+        margin: 0 auto;
+        padding: 1em;
+        border-radius: 5px;
+        background-color: #ffebee;
+        color: #333333;
+        font-size: larger;
+    }
+
+    #new_comer_msg::before {
+        width: 24px;
+        height: 12px;
+        border-bottom: 6px solid #f06060;
+        border-left: 6px solid #f06060;
+        transform: rotate(-45deg) translate(2.5px, -2.5px);
+        content: '';
+    }
+
+    #new_comer_msg p {
+        margin: 0;
+        padding: 0 0 0 .7em;
+        border-left: 1px solid #f06060;
+    }
+
+    #feedback_msg {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: block;
+        height: 100px;
+    }
+    #on_msg, #off_msg {
+        display: none;
+        text-align: center;
+        font-size: x-large;
+    }
+
+    #feedback_img {
+        display: block;
+    }
+    #on_img, #off_img {
+        display: none;
+        text-align: center;
+    }
+
+    
+    #next {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 50px;
+    }
+
+    .otree-btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin:0 auto;
+    padding: .9em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+    font-size: larger;
+    content: '次の取引に進む';
+}
+
+    .otree-btn-next::after {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        content: '';
+    }
+
+    .otree-btn-next:hover {
+        background-color: #1579c0;
+    }
+
+    .otree-timer {
+        display: none;
+    }
+
+</style>
+
+<div id="new_comer">
+        <p id="new_comer_msg">
+        新しい相手と取引を始めます。</p>
+</div>
+
+
+
+<div id="feedback_msg">
+    <div id="on_msg">
+        <p>
+            あなたはランプをつけました。<br>
+            元手から<span style="font-weight: bolder;">250point</span>を支払いました。
+        </p>
+    </div>
+    <div id="off_msg">
+        <p>
+            あなたはランプをつけませんでした。<br>
+        </p>
+    </div>
+
+</div>
+
+<div id="feedback_img">
+    <div id="on_img">
+        <img src="{{  static 'mpexp_livepage/match_interaction_turnon.png'}}" alt="lamp_on" width="300px">
+    </div>
+    <div id="off_img">
+        <img src="{{  static 'mpexp_livepage/match_interaction_turnoff.png'}}" alt="lamp_off" width="300px">
+    </div>
+</div>
+
+<div id="next">
+    {{ next_button }}
+</div>
+
+<script>
+    {{ if player.decision_signal == 1 }} 
+        document.getElementById('on_msg').style.display = "block";
+        document.getElementById('on_img').style.display = "block";
+    {{ else }}
+        document.getElementById('off_msg').style.display = "block";
+        document.getElementById('off_img').style.display = "block";
+    {{ endif }}
+</script>
+
+
+{{ endblock }}

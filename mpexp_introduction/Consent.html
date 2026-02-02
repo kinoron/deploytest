@@ -1,0 +1,131 @@
+{{ block title }}
+    相互作用における意思決定の実験
+{{ endblock }}
+
+{{ block content }}
+
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+        font-size: large;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .bold {
+        font-weight: 700;
+        font-size: larger;
+    }
+
+    .paragraph {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    #info {
+        margin-bottom: 80px;
+    }
+
+    #next {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 100px;
+    }
+
+    .otree-btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin:0 auto;
+    padding: .9em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+    font-size: larger;
+    content: '次の取引に進む';
+}
+
+    .otree-btn-next::after {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        content: '';
+    }
+
+    .otree-btn-next:hover {
+        background-color: #1579c0;
+    }
+</style>
+
+<body>
+    <p>
+        この度はお忙しい中、ご協力いただき、誠にありがとうございます。<br>
+        実験にご参加いただく前に、まずは下の文をよくお読みください。    
+    </p>
+
+    <p class="paragraph">
+        <h3>
+            【本研究の目的と内容】
+        </h3>
+        <p>
+            本研究は、<span class="bold">他者との相互作用が意思決定に与える影響</span>について検討することを目的としています。<br>
+            実験では、他の参加者との取引に関する意思決定、および同じ相手との取引関係を続けるかどうかの意思決定を繰り返し行なっていただきます。<br>
+            実験の参加には<span class="bold">最大2時間程度</span>かかることがあります。
+        </p>
+        
+    </p>
+
+    <p class="paragraph">
+        <h3>
+            【ご参加にあたって】
+        </h3>
+        この研究への参加は任意です。<br>
+        参加をとりやめたいと思った場合は、実験画面に進まずブラウザの閉じるボタンを押して、実験参加を中止してください。<br>
+        また、実験終了後に参加をとりやめたい場合には、お申し出ください。<br>
+        その場合は、同意を撤回されたものとみなし、全てのデータを削除いたします。
+    </p>
+
+    <p class="paragraph">
+        <h3>
+            【プライバシーの保護について】
+        </h3>
+        この調査では匿名で回答していただき、得られた回答はすべて数値データとして統計的に処理されます。個人を特定可能な情報とともに回答が公表されることはありません。<br>
+        ただし、科学データ公開の精神にのっとり、個人が特定不可能であることを確認した実験データについては、他の研究者も利用可能な科学データのリポジトリに公開されます。<br>
+        この調査で得られるデータは教育・研究目的以外には利用されません。
+    </p>
+
+    <div id="info">
+        <p class="paragraph">
+            <h3>
+                【研究実施者】
+            </h3>
+            渡邊裕季乃（東京大学大学院人文社会系研究科・修士課程2年）
+        </p>
+        <p class="paragraph">
+            <h3>
+                【実験責任者連絡先】
+            </h3>
+            大坪庸介（東京大学大学院人文社会系研究科・教授）<br>
+            email: yohtsubo@l.u-tokyo.ac.jp
+        </p>
+    </div>
+    <p>
+        以上の内容をよくお読みいただき、ご理解いただいた上で、この調査に参加することに同意していただける場合は、右下の「Next >」をクリックして、次にお進みください。<br>
+        同意しない場合はこのままブラウザを閉じてください。
+    </p>
+
+    <div id="next">
+        {{ next_button }}
+    </div>
+    
+</body>
+
+
+
+{{ endblock }}
