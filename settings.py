@@ -22,7 +22,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name = 'mpexp_livepage',
-        app_sequence=[#'mpexp_introduction',
+        app_sequence=['mpexp_introduction',
                       'mpexp_livepage',
                       'mpexp_demographic'
                       ],
@@ -77,7 +77,7 @@ REAL_WORLD_CURRENCY_DECIMAL_PLACES = 0
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
-AUTH_LEVEL = 'STUDY'
+AUTH_LEVEL = 'DEMO'
 
 DEMO_PAGE_INTRO_HTML = """ """
 

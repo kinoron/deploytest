@@ -265,13 +265,13 @@ def live_method(player: Player, data):
 # PAGES
 
 
-# """
-# お待ちくださいページ
-# """
-# class Introduction(Page):
-#     @staticmethod
-#     def is_displayed(player: Player):
-#         return player.round_number == 1
+"""
+お待ちくださいページ
+"""
+class Introduction(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == 1
 
 
 """
@@ -291,7 +291,7 @@ class MatchingWaitPage(WaitPage):
 20秒のタイムアウトあり
 """
 class Turnon_Lamp(Page):
-    timeout_seconds = 60
+    timeout_seconds = 30
 
     @staticmethod
     def is_displayed(player: Player):
@@ -467,6 +467,7 @@ class FinalResults(Page):
 
 
 page_sequence = [
+    Introduction,
     MatchingWaitPage,
     Turnon_Lamp,
     Feedback_Lamp,

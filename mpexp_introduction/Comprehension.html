@@ -121,7 +121,7 @@
     <div id="discription">
         <p>
             これから行う実験について、正しく理解しているか確認するため、簡単なクイズにお答えください。<br>
-            クイズは全部で3問です。全問正解すると先に進むことができます。<br>
+            クイズは全部で4問です。全問正解すると先に進むことができます。<br>
             ページ下部に、先ほど説明に使用した資料があるので、参考にしてください。
         </p>
     </div>
@@ -133,9 +133,16 @@
     <div class="questionbody">
         <div id="question1" class="box">
             <span class="qtitle">問題1</span>
+            <p class="qtext">
+                ランプをつけるのにポイントはかからない。
+            </p>
+            {{  formfield 'q1' }}
+        </div>
+        <div id="question2" class="box">
+            <span class="qtitle">問題2</span>
             <p id="main_first_msg">
                 取引におけるあなたと相手の行動によって、以下の利益が得られるとします。
-                <br>　
+                <br>
             </p>
             <div id="payoff_matrix">
                 <table class="table table-bordered text-center">
@@ -163,11 +170,11 @@
                                     vertical-align: middle;">
                                 A
                             </th>
-                                <td class="cell choiceC">あなた: <span class="payoff_txt">400</span> point<br>
-                                    相手: <span class="payoff_txt">400</span> point
+                                <td class="cell choiceC">あなた: <span class="payoff_txt">450</span> point<br>
+                                    相手: <span class="payoff_txt">450</span> point
                                     </td>
-                                <td class="cell choiceD">あなた: <span class="payoff_txt">600</span> point<br>
-                                    相手: <span class="payoff_txt">-200</span> point
+                                <td class="cell choiceD">あなた: <span class="payoff_txt">700</span> point<br>
+                                    相手: <span class="payoff_txt">-250</span> point
                                     </td>
                         </tr>
                         <tr>
@@ -176,8 +183,8 @@
                                     vertical-align: middle;">
                                 B
                             </th>
-                            <td class="cell choiceC">あなた: <span class="payoff_txt">-200</span> point<br>
-                                相手: <span class="payoff_txt">600</span> point
+                            <td class="cell choiceC">あなた: <span class="payoff_txt">-250</span> point<br>
+                                相手: <span class="payoff_txt">700</span> point
                                 </td>
                             <td class="cell choiceD">あなた: <span class="payoff_txt">0</span> point<br> 
                                 相手: <span class="payoff_txt">0</span> point
@@ -187,36 +194,35 @@
                     </tbody>
 
                 </table>
-            
-        </div>
+            </div>
             <div>
                 <p class="qtext">
                     あなたが"A"、相手が"B"を選んだ場合、あなたの得られるポイントは何ポイントですか。
                 </p>
                 <div class="choicebody">
-                    {{  formfield 'q1' }}
+                    {{  formfield 'q2' }}
                 </div>
                 
             </div>
-
-    </div>
-        
-    <div id="question2" class="box">
-        <span class="qtitle">問題2</span>
-        <p class="qtext">
-            『次のラウンドも同じ相手と取引を続けますか』という質問に対して、あなたが『はい』、相手が『いいえ』を選んだ場合、どうなりますか。
-        </p>
-        {{  formfield 'q2' }}
-    </div>
-    <div id="question3" class="box">
-        <span class="qtitle">問題3</span>
-        <p class="qtext">
-            『次のラウンドも同じ相手と取引を続けますか』という質問に対して、2人とも『はい』を選んだ場合、どうなりますか。
-        </p>
-        {{  formfield 'q3' }}
+        </div> 
+        <div id="question3" class="box">
+            <span class="qtitle">問題3</span>
+            <p class="qtext">
+                『次のラウンドも同じ相手と取引を続けますか』という質問に対して、あなたが『はい』、相手が『いいえ』を選んだ場合、どうなりますか。
+            </p>
+            {{  formfield 'q3' }}
+        </div>
+        <div id="question4" class="box">
+            <span class="qtitle">問題4</span>
+            <p class="qtext">
+                『次のラウンドも同じ相手と取引を続けますか』という質問に対して、2人とも『はい』を選んだ場合、どうなりますか。
+            </p>
+            {{  formfield 'q4' }}
+        </div>
     </div>
     <div id="slidewrapper">
-        <iframe src="https://www.slideshare.net/slideshow/embed_code/key/mKEJMt8ubtQK6E?hostedIn=slideshare&page=upload" width="800" height="600" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>    </div>
+        <iframe src="https://www.slideshare.net/slideshow/embed_code/key/qp1RTaWxM762Dt?hostedIn=slideshare&page=upload" width="800" height="600" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> 
+    </div>
     <div id="next">
         {{ next_button }}
     </div>

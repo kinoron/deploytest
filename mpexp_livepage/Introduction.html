@@ -1,0 +1,79 @@
+{{ block title }}
+    待機中
+{{ endblock }}
+
+{{ block content }}
+
+<style>
+    body {
+        font-family: "Meiryo", sans-serif;
+        font-size: larger;
+    }
+    #next {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 100px;
+    }
+
+    .otree-btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin:0 auto;
+    padding: .9em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+    font-size: larger;
+    content: '次の取引に進む';
+}
+    #slidewrapper {
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+    }
+
+    .otree-btn-next::after {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        content: '';
+    }
+
+    .otree-btn-next:hover {
+        background-color: #1579c0;
+    }
+
+</style>
+
+<body>
+    <div id="main_introduction">
+        <p>
+            理解度チェックお疲れさまでした。<br>
+            他の参加者の回答が終わるまで、このままお待ちください。<br>
+            zoomから指示があったら、「Next >」をクリックして、実験画面にお進みください。
+        </p>
+    </div>
+    <div id="next">
+        {{ next_button }}
+    </div>
+    <div>
+        <p>
+            ご自由にご覧ください。
+        </p>
+    </div>
+    <div id="slidewrapper">
+        <iframe src="https://www.slideshare.net/slideshow/embed_code/key/qp1RTaWxM762Dt?hostedIn=slideshare&page=upload" width="800" height="600" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+    </div>
+
+</body>
+    
+
+
+{{ endblock }}

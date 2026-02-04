@@ -2,7 +2,7 @@ from otree.api import *
 
 
 doc = """
-introduction for mpexp
+実験同意および理解度確認チェック
 """
 
 
@@ -21,20 +21,26 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    q1 = models.IntegerField(choices=[
-        [1, '600point'],
-        [2, '400point'],
-        [3, '-200point'],
+    q1 = models.BooleanField(choices=[[True, '○'],
+                                      [False, '×'],],
+                                      label=""
+                                      )
+
+    q2 = models.IntegerField(choices=[
+        [1, '700point'],
+        [2, '450point'],
+        [3, '-250point'],
         [4, '0point'],],
         widget=widgets.RadioSelect,
         label=""
     )
 
-    q2 = models.BooleanField(choices=[[False, '次のラウンドも同じ相手と取引が続く'], 
+    q3 = models.BooleanField(choices=[[False, '次のラウンドも同じ相手と取引が続く'], 
                                       [True, '次のラウンドは違う相手と新しく取引を始める']],
                                       label="")
-    q3 = models.BooleanField(choices=[[False, '必ず同じ相手と取引が続く'],
-                                      [True, '小さな確率で、関係が解消することがある']],
+    
+    q4 = models.BooleanField(choices=[[False, '必ず同じ相手と取引が続く'],
+                                      [True, '基本的に同じ相手との関係が継続するが、小さい確率で関係が解消することがある']],
                                       label="")
 
 
@@ -45,14 +51,15 @@ class Consent(Page):
 
 class Comprehension(Page):
     form_model = 'player'
-    form_fields = ['q1', 'q2', 'q3']
+    form_fields = ['q1', 'q2', 'q3', 'q4']
 
     @staticmethod
     def error_message(player: Player, values):
         solutions = dict(
-            q1 = 3,
-            q2 = True,
+            q1 = False,
+            q2 = 3,
             q3 = True,    
+            q4 = True,
         )
 
         error_messages = dict()
